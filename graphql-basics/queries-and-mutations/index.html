@@ -1,0 +1,690 @@
+<!doctypehtml><html lang="en"><meta charset="utf-8"><link rel="icon"type="image/svg+xml"href="/assets/favicon.15621087ab873d484cfdc234ae6d4f0559d2ece6.svg"><meta name="viewport"content="width=device-width,initial-scale=1"><link href="/assets/main.d3c4fd66da45b5fe1b587fd7bc4b64cc7a34bcf3.css"rel="stylesheet"><title>Queries and Mutations - GraphQL basics - Building GraphQL APIs with AWS AppSync</title><nav class="navbar navbar-light"><div class="container-fluid flex-nowrap"><a class="navbar-brand"href="/">Building GraphQL APIs with AWS AppSync</a> <button class="navbar-toggler d-lg-none align-self-start"type="button"data-bs-toggle="offcanvas"data-bs-target="#offcanvasNavbar"aria-controls="offcanvasNavbar"><span class="navbar-toggler-icon"></span></button><div class="offcanvas offcanvas-end"tabindex="-1"id="offcanvasNavbar"aria-labelledby="offcanvasNavbarLabel"><div class="offcanvas-header"><h5 class="offcanvas-title"id="offcanvasNavbarLabel">Building GraphQL APIs with AWS AppSync</h5><button type="button"class="btn-close text-reset"data-bs-dismiss="offcanvas"aria-label="Close"></button></div><div class="offcanvas-body keep-scrolltop"><ul class="nav navbar-nav justify-content-end flex-grow-1 pe-3"><li class="nav-item"><a class="nav-link"href="/introduction/">Introduction</a><li class="nav-item"><a class="nav-link active"href="/graphql-basics/">GraphQL basics</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/graphql-basics/graphql-vs-rest/">GraphQL vs REST</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/schema/">Schema</a><li class="nav-item"><a class="nav-link active"href="/graphql-basics/queries-and-mutations/">Queries and Mutations</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/resolvers/">Resolvers</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/access-control/">Access control</a></ul><li class="nav-item"><a class="nav-link"href="/aws-appsync/">AWS AppSync</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/">API configuration</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/authorization-providers/">Authorization providers</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/logging-and-monitoring/">Logging and monitoring</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/custom-domains/">Custom domains</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/waf/">WAF</a></ul><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/">Data sources</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/lambda-1/">Lambda</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/dynamodb/">DynamoDB</a><li class="nav-item"><span class="nav-link">HTTP 🚧</span><li class="nav-item"><span class="nav-link">RDS 🚧</span><li class="nav-item"><span class="nav-link">None 🚧</span></ul><li class="nav-item"><span class="nav-link">Resolvers 🚧</span><li class="nav-item"><span class="nav-link">Authorization 🚧</span><li class="nav-item"><span class="nav-link">Error handling 🚧</span><li class="nav-item"><span class="nav-link">Real-time data with subscriptions 🚧</span></ul><li class="nav-item"><span class="nav-link">Infrastructure-as-code 🚧</span><ul class="nav flex-column"><li class="nav-item"><span class="nav-link">Terraform 🚧</span><li class="nav-item"><span class="nav-link">CDK 🚧</span><li class="nav-item"><span class="nav-link">Amplify 🚧</span></ul><li class="nav-item"><span class="nav-link">Example application 🚧</span><li class="nav-item"><a class="nav-link"href="/glossary/">Glossary</a><li class="nav-item"><a class="nav-link"href="/about-the-author/">About the author</a><li class="nav-item"><a class="nav-link"href="/changelog/">Changelog</a><li class="nav-item"><a class="nav-link"href="/copyright/">Copyright</a></ul></div></div></div></nav><div class="d-flex flex-row"><ul class="nav flex-column navigation flex-shrink-0 flex-nowrap overflow-auto d-none d-lg-flex keep-scrolltop"><li class="nav-item"><a class="nav-link"href="/introduction/">Introduction</a><li class="nav-item"><a class="nav-link active"href="/graphql-basics/">GraphQL basics</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/graphql-basics/graphql-vs-rest/">GraphQL vs REST</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/schema/">Schema</a><li class="nav-item"><a class="nav-link active"href="/graphql-basics/queries-and-mutations/">Queries and Mutations</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/resolvers/">Resolvers</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/access-control/">Access control</a></ul><li class="nav-item"><a class="nav-link"href="/aws-appsync/">AWS AppSync</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/">API configuration</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/authorization-providers/">Authorization providers</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/logging-and-monitoring/">Logging and monitoring</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/custom-domains/">Custom domains</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/waf/">WAF</a></ul><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/">Data sources</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/lambda-1/">Lambda</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/dynamodb/">DynamoDB</a><li class="nav-item"><span class="nav-link">HTTP 🚧</span><li class="nav-item"><span class="nav-link">RDS 🚧</span><li class="nav-item"><span class="nav-link">None 🚧</span></ul><li class="nav-item"><span class="nav-link">Resolvers 🚧</span><li class="nav-item"><span class="nav-link">Authorization 🚧</span><li class="nav-item"><span class="nav-link">Error handling 🚧</span><li class="nav-item"><span class="nav-link">Real-time data with subscriptions 🚧</span></ul><li class="nav-item"><span class="nav-link">Infrastructure-as-code 🚧</span><ul class="nav flex-column"><li class="nav-item"><span class="nav-link">Terraform 🚧</span><li class="nav-item"><span class="nav-link">CDK 🚧</span><li class="nav-item"><span class="nav-link">Amplify 🚧</span></ul><li class="nav-item"><span class="nav-link">Example application 🚧</span><li class="nav-item"><a class="nav-link"href="/glossary/">Glossary</a><li class="nav-item"><a class="nav-link"href="/about-the-author/">About the author</a><li class="nav-item"><a class="nav-link"href="/changelog/">Changelog</a><li class="nav-item"><a class="nav-link"href="/copyright/">Copyright</a></ul><div class="flex-grow-1 main container-fluid"><div class="row"><div class="col-lg-9 body p-3"><div class="d-lg-none mb-4"><div class="accordion"id="accordionExample"><div class="accordion-item"><h2 class="accordion-header"id="mobile-toc-header"><button class="accordion-button collapsed"type="button"data-bs-toggle="collapse"data-bs-target="#mobile-toc"aria-expanded="true"aria-controls="mobile-toc">In this chapter</button></h2><div id="mobile-toc"class="accordion-collapse collapse"aria-labelledby="mobile-toc-header"data-bs-parent="#accordionExample"><div class="accordion-body"><div class="toc-container"><a style="margin-left: 0em"href="#defined-queries-and-mutations">Queries and Mutations</a> <a style="margin-left: 1em"href="#defined-fields">Fields</a> <a style="margin-left: 1em"href="#defined-query-arguments">Arguments</a> <a style="margin-left: 1em"href="#defined-variables">Variables</a> <a style="margin-left: 1em"href="#defined-aliases">Aliases</a> <a style="margin-left: 1em"href="#type-safety">Type safety</a> <a style="margin-left: 1em"href="#defined-inline-fragments">Inline fragments</a> <a style="margin-left: 2em"href="#inline-fragments-for-interfaces">Inline fragments for interfaces</a> <a style="margin-left: 2em"href="#inline-fragments-for-union-types">Inline fragments for union types</a> <a style="margin-left: 1em"href="#defined-typename">__typename</a> <a style="margin-left: 1em"href="#defined-mutations">Mutations</a> <a style="margin-left: 1em"href="#defined-multiple-operations">Multiple operations in a single request</a> <a style="margin-left: 1em"href="#query-cost">Query cost</a> <a style="margin-left: 1em"href="#example">Example</a> <a style="margin-left: 2em"href="#listing-tickets">Listing Tickets</a> <a style="margin-left: 2em"href="#searching">Searching</a> <a style="margin-left: 2em"href="#adding-tickets">Adding tickets</a></div></div></div></div></div></div><h2 id="defined-queries-and-mutations">Queries and Mutations</h2><p>Queries in GraphQL are based on two things: an <strong>entry point</strong> and <strong>traversals</strong>. The entry point is the initial object (or objects) that are coming from a Query or a Mutation type. This provides a "foothold" in the objects graph.<p>Then the query can define what other fields and objects it needs in the response. This makes GraphQL queries powerful: the client can define what it needs and it gets exactly that.<p>For example, a client might want to show the social graph for a user, so it fetches the friends:<pre class="highlight"><code><span class="hljs-keyword">query</span> {
+  user(id: <span class="hljs-string">"user1"</span>) {
+    name
+    friends {
+      name
+    }
+  }
+}</code></pre><p>A different client might want to show an admin panel and show all the users with their email addresses and permissions:<pre class="highlight"><code><span class="hljs-keyword">query</span> {
+  allUsers {
+    name
+    email
+    permissions {
+      name
+    }
+  }
+}</code></pre><p>Both queries above use the same object graph, but they get different data. This gives GraphQL queries a lot of flexibility and if used well provides a faster user experience.<div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Note</div><div class="tbox-body"><p>It's all too easy to query everything and then select what is needed on the client-side. But this does not utilize the flexibility of the queries and goes against the best practices for GraphQL.</div></div></div><p>But queries are a lot more powerful than just selecting what fields the client needs. GraphQL provides a lot of features to fine-tune their behavior. In this chapter we'll look into the most useful ones and how to use them.<h3 id="defined-fields">Fields</h3><p>(<a href="https://graphql.org/learn/queries/#fields">Official docs</a>)<p>What gives the most versatility for GraphQL queries is the ability to select the fields they need in the response. A type might have many fields, but if the client needs just a few of them, then it consumes less resources to omit the unneeded ones.<p>For example, a <code>User</code> object has a <code>username</code>, a <code>bio</code>, and an <code>email</code> address:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+  bio:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  user(username:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> User</span>
+}</code></pre><p>If the client does not need the <code>email</code> address, it can choose not to ask for that:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  user(username: <span class="hljs-string">"user1"</span>) {
+    username
+    bio
+  }
+}</code></pre><p>And the result:<pre class="highlight"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"user"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"bio"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Lorem ipsum"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">It's not just about the bandwidth</div><div class="tbox-body"><p>While most fields directly map to columns in a database, it is not always the case and the client should not assume it is "free" on the backend. For example, the <code>User</code> object in the database might only contain the <code>username</code> but not the <code>email</code> address. In a common scenario, returning the email means sending a call to Cognito (or a similar user directory) and extract the value from the response.<p>Because of this, clients should query only for data that they will actually use.</div></div></div><p>Fields can also be types defined in the schema. Getting a field that is not scalar is how a query can move from object to object in the graph. For example, showing the friends of a user means asking for the friend object and then their fields.<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+  bio:<span class="hljs-literal"> String</span>
+  friends: [<span class="hljs-literal">User</span>!]!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  user(username:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> User</span>
+}</code></pre><pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  user(username: <span class="hljs-string">"user1"</span>) {
+    username
+    friends {
+      username
+    }
+  }
+}</code></pre><p>And the result:<pre class="highlight"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"user"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"friends"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-punctuation">{</span>
+          <span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user2"</span>
+        <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-punctuation">{</span>
+          <span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user3"</span>
+        <span class="hljs-punctuation">}</span>
+      <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><h3 id="defined-query-arguments">Arguments</h3><p>(<a href="https://graphql.org/learn/queries/#arguments">Official docs</a>)<p>As we've seen in the <a href="/graphql-basics/schema/#defined-schema-arguments">Arguments</a> chapter, fields of any type can define what arguments they need. These can be "top-level", such as a Query or a Mutation, but every field for every type can have arguments too.<p>A client query must provide all required arguments and it can fill any optional ones. When a query does not pass any arguments for a field the parentheses are missing.<p>For example, a query in the schema might define an optional argument and the client can choose whether to define that or not:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  <span class="hljs-comment"># No ! after String, so this is an optional argument</span>
+  allUsers(search:<span class="hljs-literal"> String</span>): [<span class="hljs-literal">User</span>]
+}</code></pre><p>Both of these queries are valid:<pre class="highlight"><code><span class="hljs-keyword">query</span><span class="hljs-literal"> Query1</span> {
+  allUsers {
+    username
+    email
+  }
+}
+
+<span class="hljs-keyword">query</span><span class="hljs-literal"> Query2</span> {
+  allUsers(search: <span class="hljs-string">"admin"</span>) {
+    username
+    email
+  }
+}</code></pre><p>Arguments for fields work the same. Here, the <code>username</code> is required, while the <code>after</code> is optional:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Ticket</span> {
+  text:<span class="hljs-literal"> String</span>!
+  <span class="hljs-comment"># POSIX time</span>
+  created:<span class="hljs-literal"> Int</span>!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  <span class="hljs-comment"># the argument is optional</span>
+  tickets(after:<span class="hljs-literal"> Int</span>): [<span class="hljs-literal">Ticket</span>]
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  <span class="hljs-comment"># the argument is required</span>
+  user(username:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> User</span>
+}</code></pre><p>Defining arguments for a nested field works the same as for the query itself:<pre class="highlight"><code><span class="hljs-keyword">query</span><span class="hljs-literal"> Query1</span> {
+  user(username: <span class="hljs-string">"user1"</span>) {
+    username
+    tickets(after: <span class="hljs-number">1639907490</span>) {
+      text
+      created
+    }
+  }
+}
+
+<span class="hljs-keyword">query</span><span class="hljs-literal"> Query2</span> {
+  user(username: <span class="hljs-string">"user1"</span>) {
+    username
+    <span class="hljs-comment"># no argument here</span>
+    tickets {
+      text
+      created
+    }
+  }
+}</code></pre><h3 id="defined-variables">Variables</h3><p>(<a href="https://graphql.org/learn/queries/#variables">Official docs</a>)<p>As queries are text-based and arguments are usually user-supplied, for example a search field on a website, it's a bad idea to use string concatenation. Instead, GraphQL provides a way to separate the fixed part of the query from the variable part.<p>In this query, the variable part is the <code>text</code> argument of the <code>search</code> query:<pre class="highlight"><code><span class="hljs-keyword">query</span><span class="hljs-literal"> SearchQuery</span> {
+  search(text: <span class="hljs-string">"users"</span>) {
+    text
+    location
+  }
+}</code></pre><p>With string concatenation it's all too easy to end up with something like this:<pre class="highlight"><code><span class="hljs-comment">// don't do this</span>
+
+<span class="hljs-comment">// search is the user-provided value</span>
+<span class="hljs-keyword">const</span> graphQLQuery = <span class="hljs-string">`query SearchQuery {
+  search(text: "<span class="hljs-subst">${search}</span>") {
+    text
+    location
+  }
+}`</span>;</code></pre><p>The problem here is that the value can contain characters that "break away" from the query argument. For example, if a user searches for <code>something"</code>, then the resulting query is going to be:<pre class="highlight"><code><span class="hljs-keyword">query</span><span class="hljs-literal"> SearchQuery</span> {
+  search(text: <span class="hljs-string">"something"</span><span class="hljs-string">") {
+    text
+    location
+  }
+}</span></code></pre><p>With the double <code>"</code>, the query is now invalid and the user will get an error.<p>To declare a variable for a query, give it a name and add it to the query object. Then whenever you want to define that value, use the variable name:<pre class="highlight"><code><span class="hljs-keyword">query</span><span class="hljs-literal"> SearchQuery</span>(<span class="hljs-name">$text</span>:<span class="hljs-literal"> String</span>) {
+  search(text: <span class="hljs-name">$text</span>) {
+    text
+    location
+  }
+}</code></pre><p>Then pass the variable separately, which is dependent on the client library you are using.<p>For example, AppSync variables are in <code>params/variables</code> as a JSON object:<figure class="image prevp"><img srcset="/assets/iwiAdmFyaWFibGVzQDEuNS5wbmclAw.96f77d8d39cb5abd7ade39aaf58df7fccfb30f3a.png, /assets/iwuAdmFyaWFibGVzQDEuNS5wbmcldy0yODgwAw.906dbdd74dd84d3f300f0a1ede41cd64488f0a52.png 1.5x"title="Variables are defined separately for an AWS AppSync query"><figcaption class="caption">Variables are defined separately for an AWS AppSync query</figcaption></figure><div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Note</div><div class="tbox-body"><p>Unlike <a href="https://www.cloudflare.com/learning/security/threats/sql-injection/">SQL injection</a>, string concatenation in a GraphQL query is <em>not</em> a security vulnerability. This is because it happens on the client-side, so a malicious actor can already send any query they wish.<p>Except when the dynamic part is defined by a client different than the one sending the request, such as a Lambda function that gets parameters from a HTTP request. In that case, not using variables can open security vulnerabilities.</div></div></div><h3 id="defined-aliases">Aliases</h3><p>(<a href="https://graphql.org/learn/queries/#aliases">Official docs</a>)<p>A query can define the same field multiple times, which is especially useful when you want to pass different arguments. For example, a user's tickets might be one of 3 states: OPEN, IN_PROGRESS, and DONE and you might want to return the top 3 tickets for each state.<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">enum</span><span class="hljs-type"> STATUS</span> {
+   <span class="hljs-type"> OPEN</span>
+   <span class="hljs-type"> IN_PROGRESS</span>
+   <span class="hljs-type"> DONE</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Ticket</span> {
+  id: <span class="hljs-literal">ID</span>!
+  status:<span class="hljs-type"> STATUS</span>!
+  description:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  tickets(status:<span class="hljs-type"> STATUS</span>, limit:<span class="hljs-literal"> Int</span>): [<span class="hljs-literal">Ticket</span>!]!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  user(username:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> User</span>
+}</code></pre><p>The syntax is <code>aliasname: field</code>:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span> {
+  user(id: <span class="hljs-string">"user1"</span>) {
+    open_tickets: tickets(status:<span class="hljs-type"> OPEN</span>, limit: <span class="hljs-number">3</span>) {
+      id
+    }
+    in_progress_tickets: tickets(
+      status:<span class="hljs-type"> IN_PROGRESS</span>,
+      limit: <span class="hljs-number">3</span>
+    ) {
+      id
+    }
+    done_tickets: tickets(status:<span class="hljs-type"> DONE</span>, limit: <span class="hljs-number">3</span>) {
+      id
+    }
+  }
+}</code></pre><p>The result contains the <code>tickets</code> 3 times, but their names are <code>open_tickets</code>, <code>in_progress_tickets</code>, and <code>done_tickets</code>:<pre class="highlight"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"user"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"open_tickets"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-punctuation">{</span><span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"1"</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// ...</span>
+      <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"in_progress_tickets"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-comment">// ...</span>
+      <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"done_tickets"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-comment">// ...</span>
+      <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Note</div><div class="tbox-body"><p>In the above example, what is the benefit of including the <code>tickets</code> 3 times, effectively making 3 database queries, instead of getting a bunch of tickets and sort them on the client-side?<p>Imagine there are a lot of new tickets coming to the system. If you want to show 3 <code>IN_PROGRESS</code> tickets, how many tickets should the client request? Maybe there are 1000 <code>OPEN</code> tickets, which means the client needs to send multiple (maybe a lot) of queries to get 3 that are not <code>OPEN</code>. Worse still, if the project is new and there are <em>no</em> <code>IN_PROGRESS</code> tickets (or less than three), the clients needs to fetch <em>all</em> tickets to determine what to show.<p>The above query makes it sure that the response contains only what the client needs.</div></div></div><h3 id="type-safety">Type safety</h3><p>(<a href="https://graphql.org/learn/validation/">Official docs</a>)<p>As the schema defines what types a query can include and also the fields of each type, the GraphQL backend can do extensive validations even before it starts building the response. While it's not enough to catch all invalid data coming into the backend, it helps a lot both in security and accidental errors.<p>For example, queries with fields that are not in the schema raise a validation error, as well as missing or extra argument. Moreover, if the query passes an argument that is of a wrong type also triggers an error.<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  id: <span class="hljs-literal">ID</span>
+  name:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  user(id: <span class="hljs-literal">ID</span>!):<span class="hljs-literal"> User</span>
+}</code></pre><pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> Query</span> {
+  <span class="hljs-comment"># Validation error of type FieldUndefined:</span>
+  <span class="hljs-comment"># Field 'missing' in type 'User'</span>
+  <span class="hljs-comment"># is undefined @ 'user/missing'</span>
+  user(id: <span class="hljs-string">"user1@example.com"</span>) {
+    id
+    name
+    missing
+  }
+  <span class="hljs-comment"># Validation error of type WrongType:</span>
+  <span class="hljs-comment"># argument 'id' with value</span>
+  <span class="hljs-comment"># 'BooleanValue{value=true}' is not</span>
+  <span class="hljs-comment"># a valid 'ID' @ 'user'</span>
+  bad_arg: user(id: <span class="hljs-variable">true</span>) {
+    id
+  }
+  <span class="hljs-comment"># Validation error of type MissingFieldArgument:</span>
+  <span class="hljs-comment"># Missing field argument id @ 'user'</span>
+  missing_arg: user {
+    id
+  }
+}</code></pre><h3 id="defined-inline-fragments">Inline fragments</h3><p>(<a href="https://graphql.org/learn/queries/#inline-fragments">Official docs</a>)<p>Inline fragments help with queries that have <a href="/graphql-basics/schema/#defined-union-types">unions</a> or <a href="/graphql-basics/schema/#defined-interfaces">interfaces</a>, since they don't define a single concrete type, but instead multiple type (unions) or an abstract type (interfaces). With inline fragments, the query can define what fields it needs for each concrete type.<h4 id="inline-fragments-for-interfaces">Inline fragments for interfaces</h4><p>For an interface, the system can have multiple user types with different fields:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">interface</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> AdminUser</span> <span class="hljs-keyword">implements</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+  permissions: [<span class="hljs-literal">String</span>!]!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> NormalUser</span> <span class="hljs-keyword">implements</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+  nickname:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  allUsers: [<span class="hljs-literal">User</span>!]!
+}</code></pre><p>A query with an inline fragment can define what fields it needs if the type is an <code>AdminUser</code> and what types if it's <code>NormalUser</code>. The syntax is <code>... on &lt;type&gt; {fields}</code>:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  allUsers {
+    username
+    email
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> AdminUser</span> {
+      permissions
+    }
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> NormalUser</span> {
+      nickname
+    }
+  }
+}</code></pre><p>The result won't have types, but the fields will be dependent on the user type and they contain all common fields (<code>username</code> and <code>email</code>) and also all fields for the type (either <code>permissions</code> or <code>nickname</code>):<pre class="highlight"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"allusers"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"email"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1@example.com"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"nickname"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Bob"</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"admin1"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"email"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"admin2@example.com"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"permissions"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"system"</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><h4 id="inline-fragments-for-union-types">Inline fragments for union types</h4><p>The same logic applies to unions too, as they also don't have a single type.<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Ticket</span> {
+  text:<span class="hljs-literal"> String</span>!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  search(<span class="hljs-keyword">query</span>:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> User</span> |<span class="hljs-literal"> Ticket</span>
+}</code></pre><p>The same structure is used here as for the interfaces:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  search(<span class="hljs-keyword">query</span>: <span class="hljs-string">"test"</span>) {
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> User</span> {
+      username
+      email
+    }
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> Ticket</span> {
+      text
+    }
+  }
+}</code></pre><h3 id="defined-typename">__typename</h3><p>(<a href="https://graphql.org/learn/queries/#meta-fields">Official docs</a>)<p>The <code>__typename</code> is a meta field that a query can include for any type and it is the name of that type. It is most useful when a client needs to handle the result differently depending on the object type.<p>For example, the <code>getCurrentUser</code> can return a <code>NormalUser</code> or an <code>AdminUser</code>:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> AdminUser</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> NormalUser</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  getCurrentUser:<span class="hljs-literal"> AdminUser</span> |<span class="hljs-literal"> NormalUser</span>
+}</code></pre><p>The query can include the <code>__typename</code> for the result:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  allUsers {
+    __typename
+    username
+    email
+  }
+}</code></pre><p>And the response contains whether the user is an <code>AdminUser</code> and the client shows the admin control panel or a <code>NormalUser</code> and redirect to a landing page, for example:<pre class="highlight"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"getCurrentUser"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"admin1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"email"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"admin1@example.com"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"__typename"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"AdminUser"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>In this example, the two types don't differ in their fields, so a client can't decide based on what properties are present in the response. But their <code>__typename</code> will always be different.<div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Note</div><div class="tbox-body"><p>While you could also include this information in the schema, for example in a user type:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> AdminUser</span> {
+  <span class="hljs-comment"># ...</span>
+  admin:<span class="hljs-literal"> Boolean</span>!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> NormalUser</span> {
+  <span class="hljs-comment"># ...</span>
+  admin:<span class="hljs-literal"> Boolean</span>!
+}</code></pre><p>The <code>__typename</code> meta field provides a cleaner alternative to this.</div></div></div><p>Since the <code>__typename</code> meta field is guaranteed to be present for all objects, it also provides a way for tools to generate strongly-types objects. For example, a TypeScript library can get the result JSON and return an object graph.<h3 id="defined-mutations">Mutations</h3><p>(<a href="https://graphql.org/learn/queries/#mutations">Official docs</a>)<p>So far, all the examples was how to <em>get</em> data from a GraphQL API. Mutations, on the other hand, is how a client can <em>change</em> it, such as creating a new user, or closing a ticket in a ticketing system.<p>Mutations use the same structure as Queries, you just need to declare them under the <code>Mutation</code> type, instead of the <code>Query</code>. A mutation can get <strong>arguments</strong> and <strong>return data</strong> the same as a query.<p>For example, let's add a mutation to add a new user to the database! For this, we need to add a field to the <code>Mutation</code> type:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Mutation</span> {
+  createUser(username:<span class="hljs-literal"> String</span>!, email:<span class="hljs-literal"> String</span>):<span class="hljs-literal"> User</span>
+}</code></pre><p>And to call it, the client query starts with <code>mutation</code>:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">mutation</span><span class="hljs-literal"> MyMutation</span> {
+  createUser(username: <span class="hljs-string">"user4"</span>) {
+    username
+    friends {
+      username
+    }
+  }
+}</code></pre><p>Under the hood, the mutation does two things: first, it does the modification based on the arguments. And second, it returns an object or a scalar and that behaves like a normal query. In the above example, the <code>createUser</code> returns a <code>User</code>, so the mutation can select what fields it needs and even move to other objects.<p>Notice that the Mutation is almost the same as a Query, the difference is just the keyword <code>mutation</code> in the client query and the type in the schema. Otherwise, it has the same query structure. In fact, there is almost no difference between the two. There is nothing preventing a query from changing data and nothing forcing a mutation to change it.<p>It is still a best practice to keep operations that are strictly read-only separated from write-read operations. First, there are some differences in the specifications, as we'll see in the <a href="#defined-multiple-operations">next chapter</a>. Also, additional functionality, for example caching, might behave differently depending on the operation type.<div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Tip</div><div class="tbox-body"><p>Make sure to define read-only operations as queries, and read-write operations as mutations.</div></div></div><h3 id="defined-multiple-operations">Multiple operations in a single request</h3><p><a href="#defined-aliases">Aliases</a> allow a single field to be present multiple times, possibly with different arguments, in a query. The same mechanism works for top-level queries and mutations too. This makes it possible to further eliminate on unnecessary roundtrips.<p>To get not one but two users from the API, define two fields with the necessary arguments and alias them:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+query {
+  <span class="hljs-attribute">user1</span>: user(id: "user1") {
+    username
+    friends {
+      name
+    }
+  }
+  user2: user(id: "user2") {
+    username
+    email
+  }
+}</code></pre><p>The result will contain both users, under the key <code>user1</code> and <code>user2</code>, respectively. Notice that the two queries don't need to get the same structure. In the example, the first fetches the friends also, while the second returns the email address instead.<p>The same works for mutations too:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+mutation MyMutation {
+  <span class="hljs-attribute">user4</span>: createUser(username: "user4") {
+    username
+    friends {
+      username
+    }
+  }
+  user5: createUser(username: "user5") {
+    username
+    bio
+  }
+}</code></pre><div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Note</div><div class="tbox-body"><p>You can't mix queries and mutations in a single request, only operations of the same type.</div></div></div><p>There is a <a href="https://graphql.org/learn/queries/#multiple-fields-in-mutations">difference</a> between queries and mutations though. When a single request contains multiple queries, they are executed <strong>in parallel</strong>, so it takes the least amount of time. But when multiple mutations are sent in a request, they are executed <strong>in serial</strong>. Otherwise, it could result in a race condition among the individual operations.<h3 id="query-cost">Query cost</h3><p>Finally, let's talk about how much a query can cost in terms of bandwidth, processing, and other related costs!<p>In a REST-like API, we can usually calculate it easily. For example, if the <code>/user/&lt;id&gt;</code> fetches a user object from the database, the total cost is 1 database query, then the size of the result object. Then if the client makes 100 such requests, we can just multiply the costs by 100. This makes it easy to cap resource usage per client: just apply some rate-limiting and it provides an efficient guardrail against overusage.<p>But with the query structure of GraphQL, estimating load becomes much more complicated. This is most apparent when a query includes collections. For example, let's query a user's friends:<pre class="highlight"><code><span class="hljs-keyword">query</span> {
+  user(id: <span class="hljs-string">"user1"</span>) {
+    username
+    friends {
+      username
+    }
+  }
+}</code></pre><p>What is the cost of this request? It depends on how many friends a user has, and the average can be quite different than the extremes. This is why <a href="https://graphql.org/learn/pagination/">pagination</a> is extremely important in GraphQL.<p>But unfortunately, that only solves some problems but not all. Let's say all collections can return no more than 100 items. If a user has a lot of friends, it will take multiple requests to fetch all of them. But when there are multiple layers of collections, it's still not enough. For example, let's get the friends' articles too:<pre class="highlight"><code><span class="hljs-keyword">query</span> {
+  user(id: <span class="hljs-string">"user1"</span>) {
+    username
+    friends {
+      username
+        articles {
+          title
+        }
+    }
+  }
+}</code></pre><p>While a single collection can have no more than 100 items, the nesting <strong>multiplies</strong> the maximum number of elements. In this case, 100 friends, each having 100 articles yields a 100 * 100 = 10.000 items in the response, worst case. And what if there are 3 layers? The worst case jumps to 1.000.000 items.<p>And it's not just about collections but individual fields. In practice, most fields are "free": the object comes from a database query and whether the response includes them or not is just a matter of saving bandwidth. But some fields might involve a separate process. A good example is to fetch the email address for a user from a Cognito user pool. If the query includes that, the GraphQL server needs to send a HTTP request to Cognito to fetch the value. Combine that with 10.000 users and it can easily trip some rate-limiting for connected systems.<p>This is a common problem in GraphQL and there are different semi-solutions for this. AppSync, for example, has a <a href="https://docs.aws.amazon.com/general/latest/gr/appsync.html#limits_appsync">hard upper limit</a> on execution time and response size. This prevents some problems but not all.<p>Other solutions try to guess the complexity of the queries before they are executed by the API. A <a href="https://blog.devgenius.io/a-principled-approach-to-graphql-query-cost-analysis-8c7243de42c1">research paper</a> from IBM provides a great insight of the problems, while a simpler approach <a href="https://shopify.engineering/rate-limiting-graphql-apis-calculating-query-complexity">from Spotify</a> is also worth reading. There are also <a href="https://github.com/4Catalyzer/graphql-validation-complexity/">tools</a> with <a href="https://github.com/slicknode/graphql-query-complexity">different</a> features that you can add to your GraphQL backend.<p>On the other hand, GraphQL's complexity on queries makes this problem even harder. For example, AWS AppSync <a href="https://docs.aws.amazon.com/appsync/latest/devguide/resolver-context-reference.html#aws-appsync-resolver-context-reference-info">provides a list</a> of fields in the query called <code>selectionSetList</code>:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span> {
+  getPost(id: <span class="hljs-name">$postId</span>) {
+    postId
+    title
+    content
+    author {
+      authorId
+      name
+    }
+  }
+}</code></pre><p>The <code>selectionSetList</code> contains the list of all fields:<pre class="highlight"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"selectionSetList"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-string">"postId"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"title"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"content"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"author"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"author/authorId"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">"author/name"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+<span class="hljs-punctuation">}</span></code></pre><p>But not for interfaces or unions:<pre class="highlight"><code><span class="hljs-keyword">query</span> {
+  node(id: <span class="hljs-string">"post1"</span>) {
+    id
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> Post</span> {
+      title
+    }
+  }
+}</code></pre><pre class="highlight"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"selectionSetList"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-string">"id"</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span></code></pre><p>In this case, if a mechanism uses the <code>selectionSetList</code> to protect an API from overload, an attacker might find a way to circumvent that.<h3 id="example">Example</h3><div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Run the queries</div><div class="tbox-body"><p>Deploy the schema in your account and run these queries live. You'll need an AWS account, the AWS CLI, and Terraform.<p>How to deploy and more info in the GitHub repository: <a href="https://github.com/sashee/graphql-example">https://github.com/sashee/graphql-example</a></div></div></div><p>Let's see how to run queries and mutations on the <a href="/graphql-basics/schema/#defined-schema-putting-it-together">data model</a> we defined in the last chapter!<figure class="plantuml image"><svg xmlns="http://www.w3.org/2000/svg"height="251"preserveAspectRatio="none"style="width:515px;height:251px;background:#fff"viewBox="0 0 515 251"width="515"><defs><filter height="300%"id="3252f8a3e3577adb618f3953408b5d43e8bfdff8cdfd5cc0e7c4d56557e3c6ff__a"width="300%"x="-1"y="-1"><feGaussianBlur result="blurOut"stdDeviation="2"></feGaussianBlur><feColorMatrix in="blurOut"result="blurOut2"values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"></feColorMatrix><feOffset dx="4"dy="4"in="blurOut2"result="blurOut3"></feOffset><feBlend in="SourceGraphic"in2="blurOut3"></feBlend></filter></defs><path fill="#FEFECE"filter="url(#3252f8a3e3577adb618f3953408b5d43e8bfdff8cdfd5cc0e7c4d56557e3c6ff__a)"style="stroke:#a80036;stroke-width:1.5;fill:#fefece"d="M139.5 7h172v116.828h-172z"></path><circle cx="202.75"cy="23"fill="#FFF"style="stroke:#a80036;stroke-width:1"r="11"></circle><path d="M203.594 29.75h-2.453V19.5H198v-2.14h8.734v2.14h-3.14v10.25Z"></path><text font-family="sans-serif"font-size="12"textLength="37"x="223.25"y="27.154">Ticket</text><path style="stroke:#a80036;stroke-width:1.5"d="M140.5 39h170"></path><text font-family="sans-serif"font-size="11"textLength="32"x="145.5"y="53.21">id: ID!</text><text font-family="sans-serif"font-size="11"textLength="66"x="145.5"y="66.015">title: String!</text><text font-family="sans-serif"font-size="11"textLength="108"x="145.5"y="78.82">description: String!</text><text font-family="sans-serif"font-size="11"textLength="70"x="145.5"y="91.624">owner: User</text><text font-family="sans-serif"font-size="11"textLength="160"x="145.5"y="104.429">severity: CRITICAL | NORMAL</text><text font-family="sans-serif"font-size="11"textLength="157"x="145.5"y="117.234">attachments: [Attachment!]!</text><path fill="#FEFECE"filter="url(#3252f8a3e3577adb618f3953408b5d43e8bfdff8cdfd5cc0e7c4d56557e3c6ff__a)"style="stroke:#a80036;stroke-width:1.5;fill:#fefece"d="M7 31h89v65.609H7z"></path><circle cx="34.6"cy="47"fill="#FFF"style="stroke:#a80036;stroke-width:1"r="11"></circle><path d="M35.444 53.75H32.99V43.5h-3.14v-2.14h8.734v2.14h-3.14v10.25Z"></path><text font-family="sans-serif"font-size="12"textLength="29"x="51.4"y="51.154">User</text><path style="stroke:#a80036;stroke-width:1.5"d="M8 63h87"></path><text font-family="sans-serif"font-size="11"textLength="32"x="13"y="77.21">id: ID!</text><text font-family="sans-serif"font-size="11"textLength="77"x="13"y="90.015">name: String!</text><path fill="#FEFECE"filter="url(#3252f8a3e3577adb618f3953408b5d43e8bfdff8cdfd5cc0e7c4d56557e3c6ff__a)"style="stroke:#a80036;stroke-width:1.5;fill:#fefece"d="M355 31h105v65.609H355z"></path><circle cx="370"cy="47"fill="#B4A7E5"style="stroke:#a80036;stroke-width:1"r="11"></circle><path d="M365.922 42.766v-2.157h7.39v2.157h-2.468v8.078h2.469V53h-7.391v-2.156h2.469v-8.078h-2.47Z"></path><text font-family="sans-serif"font-size="12"font-style="italic"textLength="73"x="384"y="51.154">Attachment</text><path style="stroke:#a80036;stroke-width:1.5"d="M356 63h103"></path><text font-family="sans-serif"font-size="11"textLength="32"x="361"y="77.21">id: ID!</text><text font-family="sans-serif"font-size="11"textLength="60"x="361"y="90.015">url: String!</text><path fill="#FEFECE"filter="url(#3252f8a3e3577adb618f3953408b5d43e8bfdff8cdfd5cc0e7c4d56557e3c6ff__a)"style="stroke:#a80036;stroke-width:1.5;fill:#fefece"d="M278 185h129v52.805H278z"></path><circle cx="319.55"cy="201"fill="#FFF"style="stroke:#a80036;stroke-width:1"r="11"></circle><path d="M320.394 207.75h-2.453V197.5H314.8v-2.14h8.734v2.14h-3.14v10.25Z"></path><text font-family="sans-serif"font-size="12"textLength="38"x="339.45"y="205.154">Image</text><path style="stroke:#a80036;stroke-width:1.5"d="M279 217h127"></path><text font-family="sans-serif"font-size="11"textLength="117"x="284"y="231.21">content_type: String!</text><path fill="#FEFECE"filter="url(#3252f8a3e3577adb618f3953408b5d43e8bfdff8cdfd5cc0e7c4d56557e3c6ff__a)"style="stroke:#a80036;stroke-width:1.5;fill:#fefece"d="M442 185h59v52.805h-59z"></path><circle cx="459.7"cy="201"fill="#FFF"style="stroke:#a80036;stroke-width:1"r="11"></circle><path d="M460.544 207.75h-2.453V197.5h-3.141v-2.14h8.734v2.14h-3.14v10.25Z"></path><text font-family="sans-serif"font-size="12"textLength="21"x="474.3"y="205.154">File</text><path style="stroke:#a80036;stroke-width:1.5"d="M443 217h57"></path><text font-family="sans-serif"font-size="11"textLength="47"x="448"y="231.21">size: Int!</text><path d="M384.81 115.79c-10.38 23.23-22.22 49.75-30.74 68.81m24.46-71.9 14.54-15.41-1.76 21.12-12.78-5.71zm51.31 3.09c10.22 23.23 21.88 49.75 30.27 68.81m-36.76-66.18-1.65-21.13 14.46 15.49-12.81 5.64zM312.5 111c21.6 7.86 43.32 2.04 60.43-8.17"fill="none"style="stroke:#a80036;stroke-width:1;fill:none"></path><path fill="#A80036"style="stroke:#a80036;stroke-width:1;fill:#a80036"d="m381.44 97.13-9.707 1.664 5.547 1.11-1.11 5.547 5.27-8.321z"></path><path d="M96.1 80.35c13.4 3.74 28.34 6.65 42.4 6.65"fill="none"style="stroke:#a80036;stroke-width:1;fill:none"></path><path fill="#A80036"style="stroke:#a80036;stroke-width:1;fill:#a80036"d="m96.1 80.35 7.593 6.272-2.777-4.928 4.928-2.777L96.1 80.35z"></path></svg><figcaption class="caption">Data model</figcaption></figure><h4 id="listing-tickets">Listing Tickets</h4><p>First, let's use the Query that retrieves the tickets in the system:<pre class="highlight prevp"><code><span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  getTickets {
+    <span class="hljs-comment"># return these fields for each Ticket</span>
+    description
+    id
+    owner {
+      <span class="hljs-comment"># if there is an owner, return these fields for the User</span>
+      id
+      name
+    }
+    severity
+    title
+  }
+}</code></pre><p>This returns a list of <code>Ticket</code>s with the defined fields:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"getTickets"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"description"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Description 2"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ticket2"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"owner"</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">null</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"severity"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"CRITICAL"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"title"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Ticket 2"</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"description"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Description 1"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ticket1"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"owner"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+          <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span><span class="hljs-punctuation">,</span>
+          <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span>
+        <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"severity"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"NORMAL"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"title"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Ticket 1"</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>This query defines <a href="#defined-fields">fields</a> that the response contains. It defines nested fields, such as the <code>owner.id</code> and the <code>owner.name</code>, and when the <code>owner</code> is non-null GraphQL returns the <code>id</code> and the <code>name</code> of the user. This is possible, as the schema defines the <code>owner</code> as an optional field:<pre class="highlight prevp"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> Ticket</span> {
+  <span class="hljs-comment"># ...</span>
+  owner:<span class="hljs-literal"> User</span>
+}</code></pre><p>The <code>getTickets</code> query returns a list, and the result is a JSON array. This is because the defines the type of that field as a list:<pre class="highlight prevp"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  <span class="hljs-comment"># must contain a list (might have 0 elements)</span>
+  <span class="hljs-comment"># and each element is a Ticket</span>
+  getTickets: [<span class="hljs-literal">Ticket</span>!]!
+  <span class="hljs-comment"># ...</span>
+}</code></pre><p>Notice that in the query there is no difference between a list and a type. You need to define the fields you want in the result, and the response JSON will contain an array of objects or an object depending on the schema.<p>Let's query the <code>Attachment</code>s for the <code>Ticket</code>s too!<pre class="highlight prevp"><code><span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  getTickets {
+    id
+    attachments {
+      <span class="hljs-comment"># every attachment has an id and a url</span>
+      id
+      url
+      ... <span class="hljs-keyword">on</span><span class="hljs-literal"> File</span> {
+        <span class="hljs-comment"># if it is a File, also add the size</span>
+        size
+      }
+      ... <span class="hljs-keyword">on</span><span class="hljs-literal"> Image</span> {
+        <span class="hljs-comment"># if it is an Image, add the content_type</span>
+        content_type
+      }
+    }
+  }
+}</code></pre><p>This returns the ticket IDs and the attachments for each ticket:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"getTickets"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ticket2"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"attachments"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ticket1"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"attachments"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+          <span class="hljs-punctuation">{</span>
+            <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"file1"</span><span class="hljs-punctuation">,</span>
+            <span class="hljs-attr">"url"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"example.com/file.doc"</span><span class="hljs-punctuation">,</span>
+            <span class="hljs-attr">"size"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1500</span>
+          <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+          <span class="hljs-punctuation">{</span>
+            <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"image1"</span><span class="hljs-punctuation">,</span>
+            <span class="hljs-attr">"url"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"example.com/image1.jpg"</span><span class="hljs-punctuation">,</span>
+            <span class="hljs-attr">"content_type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"image/jpg"</span>
+          <span class="hljs-punctuation">}</span>
+        <span class="hljs-punctuation">]</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>The above query defines the <code>attachments</code> field for the <code>Ticket</code> and that is a list of <code>Attachment</code>s. As an <code>Attachment</code> is an interface you can only define the common fields to return (<code>id</code> and <code>url</code>). To get fields defined for the <code>File</code> and the <code>Image</code> types, the query uses <a href="#defined-inline-fragments">inline fragments</a>. This makes it possible to define how to handle the different possible types in a single query.<p>To help with abstract types, the query can also request the <a href="#defined-typename">__typename</a>:<pre class="highlight prevp"><code><span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  getTickets {
+    id
+    attachments {
+      id
+      url
+      __typename
+    }
+  }
+}</code></pre><p>This returns an extra field for each item, indicating whether it's a <code>File</code> or an <code>Image</code>:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"getTickets"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ticket2"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"attachments"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ticket1"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"attachments"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+          <span class="hljs-punctuation">{</span>
+            <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"file1"</span><span class="hljs-punctuation">,</span>
+            <span class="hljs-attr">"url"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"example.com/file.doc"</span><span class="hljs-punctuation">,</span>
+            <span class="hljs-attr">"__typename"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"File"</span>
+          <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+          <span class="hljs-punctuation">{</span>
+            <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"image1"</span><span class="hljs-punctuation">,</span>
+            <span class="hljs-attr">"url"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"example.com/image1.jpg"</span><span class="hljs-punctuation">,</span>
+            <span class="hljs-attr">"__typename"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Image"</span>
+          <span class="hljs-punctuation">}</span>
+        <span class="hljs-punctuation">]</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><h4 id="searching">Searching</h4><p>The other query the schema provides is the <code>search</code>. It needs a <code>query</code> argument and returns a <code>Ticket</code> or a <code>User</code> (or <code>null</code>):<pre class="highlight prevp"><code><span class="hljs-comment"># need to send the value of the query separately</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span>(<span class="hljs-name">$query</span>:<span class="hljs-literal"> String</span>!) {
+  search(<span class="hljs-keyword">query</span>: <span class="hljs-name">$query</span>) {
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> User</span> {
+      <span class="hljs-comment"># if the result is a User</span>
+      id
+      name
+    }
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> Ticket</span> {
+      <span class="hljs-comment"># if the result is a Ticket</span>
+      id
+      title
+      description
+    }
+  }
+}</code></pre><p>Calling it with a <code>Ticket</code> ID:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"query"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ticket1"</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Returns the <code>Ticket</code> object:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"search"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ticket1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"title"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Ticket 1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"description"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Description 1"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Similarly, searching for a <code>User</code> works using the same query:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"query"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Returns a <code>User</code>:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"search"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>This query uses an <a href="#defined-query-arguments">argument</a> for the search term (<code>search(query: $query)</code>) and a <a href="#defined-variables">variable</a>.<p>Then to distinguish between a <code>User</code> and a <code>Ticket</code>, the query uses inline fragments. The <code>__typename</code> also works for union types:<pre class="highlight prevp"><code><span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span>(<span class="hljs-name">$query</span>:<span class="hljs-literal"> String</span>!) {
+  search(<span class="hljs-keyword">query</span>: <span class="hljs-name">$query</span>) {
+    __typename
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> User</span> {
+      id
+      name
+    }
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> Ticket</span> {
+      id
+      title
+      description
+    }
+  }
+}</code></pre><pre class="highlight"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"search"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"__typename"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"User"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>A search returns a single result, but GraphQL allows multiple fields (and that works for fields of the <code>Query</code> type too) with <a href="#defined-aliases">aliases</a>:<pre class="highlight prevp"><code><span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span>(<span class="hljs-name">$query1</span>:<span class="hljs-literal"> String</span>!, <span class="hljs-name">$query2</span>:<span class="hljs-literal"> String</span>!) {
+  <span class="hljs-comment"># first query</span>
+  result1: search(<span class="hljs-keyword">query</span>: <span class="hljs-name">$query1</span>) {
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> User</span> {
+      name
+    }
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> Ticket</span> {
+      title
+    }
+  }
+  <span class="hljs-comment"># second query</span>
+  result2: search(<span class="hljs-keyword">query</span>: <span class="hljs-name">$query2</span>) {
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> User</span> {
+      name
+    }
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> Ticket</span> {
+      title
+    }
+  }
+}</code></pre><p>With values for <code>query1</code> and <code>query2</code>:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"query1"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"query2"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ticket1"</span>
+<span class="hljs-punctuation">}</span></code></pre><p>The result JSON contains the results for both searches:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"result1"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"result2"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"title"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Ticket 1"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><h4 id="adding-tickets">Adding tickets</h4><p>Let's move on to Mutations and see how to add a new <code>Ticket</code>!<pre class="highlight prevp"><code><span class="hljs-keyword">mutation</span><span class="hljs-literal"> MyMutation</span>(
+  <span class="hljs-name">$description</span>:<span class="hljs-literal"> String</span>!,
+  <span class="hljs-name">$severity</span>:<span class="hljs-type"> SEVERITY</span>!,
+  <span class="hljs-name">$title</span>:<span class="hljs-literal"> String</span>!
+) {
+  <span class="hljs-comment"># add a Ticket with these arguments</span>
+  addTicket(details: {
+    description: <span class="hljs-name">$description</span>,
+    severity: <span class="hljs-name">$severity</span>,
+    title: <span class="hljs-name">$title</span>
+  }) {
+    <span class="hljs-comment"># and return these fields</span>
+    id
+    owner {
+      id
+      name
+    }
+    description
+    title
+    severity
+  }
+}</code></pre><p>Notice the three variables that the query needs to send:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"description"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Test description"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"title"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Test ticket"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"severity"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"NORMAL"</span>
+<span class="hljs-punctuation">}</span></code></pre><p>The result is the new <code>Ticket</code> with the fields defined in the mutation:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"addTicket"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"a10f012f-8bd0-4aaa-a4e3-d0ed85322790"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"owner"</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">null</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"description"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Test description"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"title"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Test ticket"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"severity"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"NORMAL"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>Notice that the <code>owner</code> is <code>null</code>, as it is an optional argument and the mutation did not specify it. To also provide that value:<pre class="highlight prevp"><code><span class="hljs-comment"># the owner is optional</span>
+<span class="hljs-keyword">mutation</span><span class="hljs-literal"> MyMutation</span>(
+  <span class="hljs-name">$description</span>:<span class="hljs-literal"> String</span>!,
+  <span class="hljs-name">$severity</span>:<span class="hljs-type"> SEVERITY</span>!,
+  <span class="hljs-name">$title</span>:<span class="hljs-literal"> String</span>!,
+  <span class="hljs-name">$owner</span>: <span class="hljs-literal">ID</span>
+) {
+  <span class="hljs-comment"># also define the owner</span>
+  addTicket(details: {
+      description: <span class="hljs-name">$description</span>,
+      severity: <span class="hljs-name">$severity</span>,
+      title: <span class="hljs-name">$title</span>
+    }, owner: <span class="hljs-name">$owner</span>) {
+    id
+    owner {
+      id
+      name
+    }
+    description
+    title
+    severity
+  }
+}</code></pre><p>With the variables:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"description"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Test description"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"title"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Test ticket"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"severity"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"NORMAL"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"owner"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span>
+<span class="hljs-punctuation">}</span></code></pre><p>The created <code>Ticket</code> contains an <code>owner</code>:<pre class="highlight prevp"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"addTicket"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"f41010b0-5782-493c-96be-f905b31c77d8"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"owner"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"description"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Test description"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"title"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Test ticket"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"severity"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"NORMAL"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><div class="tcolorbox tcolorbox-secondary my-5"><div class="tbox-header fw-bold">Master AppSync and GraphQL</div><div class="tbox-body"><div>Support this book and get all future updates and extra chapters in ebook format.</div><div class="d-flex justify-content-center"><a role="button"href="https://tsallai.gumroad.com/l/graphql-on-aws-appsync-book"class="btn btn-primary not-styled mt-3 text-white">Buy the book</a></div></div></div><div class="pagination row"><div class="col-6"><a href="/graphql-basics/schema/"class="border rounded d-block p-3"><div class="pagination-sublabel text-muted small">Previous</div><div class="pagination-title">&lt; Schema</div></a></div><div class="col-6"><a href="/graphql-basics/resolvers/"class="border rounded d-block p-3 text-end ms-auto"><div class="pagination-sublabel text-muted small">Next</div><div class="pagination-title">Resolvers &gt;</div></a></div></div><footer>© Tamás Sallai - <a href="https://advancedweb.hu">advancedweb.hu</a></footer></div><div class="col-lg-3 d-none d-lg-block"><div class="toc-container"><a style="margin-left: 0em"href="#defined-queries-and-mutations">Queries and Mutations</a> <a style="margin-left: 1em"href="#defined-fields">Fields</a> <a style="margin-left: 1em"href="#defined-query-arguments">Arguments</a> <a style="margin-left: 1em"href="#defined-variables">Variables</a> <a style="margin-left: 1em"href="#defined-aliases">Aliases</a> <a style="margin-left: 1em"href="#type-safety">Type safety</a> <a style="margin-left: 1em"href="#defined-inline-fragments">Inline fragments</a> <a style="margin-left: 2em"href="#inline-fragments-for-interfaces">Inline fragments for interfaces</a> <a style="margin-left: 2em"href="#inline-fragments-for-union-types">Inline fragments for union types</a> <a style="margin-left: 1em"href="#defined-typename">__typename</a> <a style="margin-left: 1em"href="#defined-mutations">Mutations</a> <a style="margin-left: 1em"href="#defined-multiple-operations">Multiple operations in a single request</a> <a style="margin-left: 1em"href="#query-cost">Query cost</a> <a style="margin-left: 1em"href="#example">Example</a> <a style="margin-left: 2em"href="#listing-tickets">Listing Tickets</a> <a style="margin-left: 2em"href="#searching">Searching</a> <a style="margin-left: 2em"href="#adding-tickets">Adding tickets</a></div></div></div></div></div><script src="/assets/main.077454cb0bffe3695e9176b1b5f8a7fd9676d920.js"></script>

@@ -1,0 +1,267 @@
+<!doctypehtml><html lang="en"><meta charset="utf-8"><link rel="icon"type="image/svg+xml"href="/assets/favicon.15621087ab873d484cfdc234ae6d4f0559d2ece6.svg"><meta name="viewport"content="width=device-width,initial-scale=1"><link href="/assets/main.d3c4fd66da45b5fe1b587fd7bc4b64cc7a34bcf3.css"rel="stylesheet"><title>Schema - GraphQL basics - Building GraphQL APIs with AWS AppSync</title><nav class="navbar navbar-light"><div class="container-fluid flex-nowrap"><a class="navbar-brand"href="/">Building GraphQL APIs with AWS AppSync</a> <button class="navbar-toggler d-lg-none align-self-start"type="button"data-bs-toggle="offcanvas"data-bs-target="#offcanvasNavbar"aria-controls="offcanvasNavbar"><span class="navbar-toggler-icon"></span></button><div class="offcanvas offcanvas-end"tabindex="-1"id="offcanvasNavbar"aria-labelledby="offcanvasNavbarLabel"><div class="offcanvas-header"><h5 class="offcanvas-title"id="offcanvasNavbarLabel">Building GraphQL APIs with AWS AppSync</h5><button type="button"class="btn-close text-reset"data-bs-dismiss="offcanvas"aria-label="Close"></button></div><div class="offcanvas-body keep-scrolltop"><ul class="nav navbar-nav justify-content-end flex-grow-1 pe-3"><li class="nav-item"><a class="nav-link"href="/introduction/">Introduction</a><li class="nav-item"><a class="nav-link active"href="/graphql-basics/">GraphQL basics</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/graphql-basics/graphql-vs-rest/">GraphQL vs REST</a><li class="nav-item"><a class="nav-link active"href="/graphql-basics/schema/">Schema</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/queries-and-mutations/">Queries and Mutations</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/resolvers/">Resolvers</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/access-control/">Access control</a></ul><li class="nav-item"><a class="nav-link"href="/aws-appsync/">AWS AppSync</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/">API configuration</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/authorization-providers/">Authorization providers</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/logging-and-monitoring/">Logging and monitoring</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/custom-domains/">Custom domains</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/waf/">WAF</a></ul><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/">Data sources</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/lambda-1/">Lambda</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/dynamodb/">DynamoDB</a><li class="nav-item"><span class="nav-link">HTTP 🚧</span><li class="nav-item"><span class="nav-link">RDS 🚧</span><li class="nav-item"><span class="nav-link">None 🚧</span></ul><li class="nav-item"><span class="nav-link">Resolvers 🚧</span><li class="nav-item"><span class="nav-link">Authorization 🚧</span><li class="nav-item"><span class="nav-link">Error handling 🚧</span><li class="nav-item"><span class="nav-link">Real-time data with subscriptions 🚧</span></ul><li class="nav-item"><span class="nav-link">Infrastructure-as-code 🚧</span><ul class="nav flex-column"><li class="nav-item"><span class="nav-link">Terraform 🚧</span><li class="nav-item"><span class="nav-link">CDK 🚧</span><li class="nav-item"><span class="nav-link">Amplify 🚧</span></ul><li class="nav-item"><span class="nav-link">Example application 🚧</span><li class="nav-item"><a class="nav-link"href="/glossary/">Glossary</a><li class="nav-item"><a class="nav-link"href="/about-the-author/">About the author</a><li class="nav-item"><a class="nav-link"href="/changelog/">Changelog</a><li class="nav-item"><a class="nav-link"href="/copyright/">Copyright</a></ul></div></div></div></nav><div class="d-flex flex-row"><ul class="nav flex-column navigation flex-shrink-0 flex-nowrap overflow-auto d-none d-lg-flex keep-scrolltop"><li class="nav-item"><a class="nav-link"href="/introduction/">Introduction</a><li class="nav-item"><a class="nav-link active"href="/graphql-basics/">GraphQL basics</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/graphql-basics/graphql-vs-rest/">GraphQL vs REST</a><li class="nav-item"><a class="nav-link active"href="/graphql-basics/schema/">Schema</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/queries-and-mutations/">Queries and Mutations</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/resolvers/">Resolvers</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/access-control/">Access control</a></ul><li class="nav-item"><a class="nav-link"href="/aws-appsync/">AWS AppSync</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/">API configuration</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/authorization-providers/">Authorization providers</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/logging-and-monitoring/">Logging and monitoring</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/custom-domains/">Custom domains</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/waf/">WAF</a></ul><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/">Data sources</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/lambda-1/">Lambda</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/dynamodb/">DynamoDB</a><li class="nav-item"><span class="nav-link">HTTP 🚧</span><li class="nav-item"><span class="nav-link">RDS 🚧</span><li class="nav-item"><span class="nav-link">None 🚧</span></ul><li class="nav-item"><span class="nav-link">Resolvers 🚧</span><li class="nav-item"><span class="nav-link">Authorization 🚧</span><li class="nav-item"><span class="nav-link">Error handling 🚧</span><li class="nav-item"><span class="nav-link">Real-time data with subscriptions 🚧</span></ul><li class="nav-item"><span class="nav-link">Infrastructure-as-code 🚧</span><ul class="nav flex-column"><li class="nav-item"><span class="nav-link">Terraform 🚧</span><li class="nav-item"><span class="nav-link">CDK 🚧</span><li class="nav-item"><span class="nav-link">Amplify 🚧</span></ul><li class="nav-item"><span class="nav-link">Example application 🚧</span><li class="nav-item"><a class="nav-link"href="/glossary/">Glossary</a><li class="nav-item"><a class="nav-link"href="/about-the-author/">About the author</a><li class="nav-item"><a class="nav-link"href="/changelog/">Changelog</a><li class="nav-item"><a class="nav-link"href="/copyright/">Copyright</a></ul><div class="flex-grow-1 main container-fluid"><div class="row"><div class="col-lg-9 body p-3"><div class="d-lg-none mb-4"><div class="accordion"id="accordionExample"><div class="accordion-item"><h2 class="accordion-header"id="mobile-toc-header"><button class="accordion-button collapsed"type="button"data-bs-toggle="collapse"data-bs-target="#mobile-toc"aria-expanded="true"aria-controls="mobile-toc">In this chapter</button></h2><div id="mobile-toc"class="accordion-collapse collapse"aria-labelledby="mobile-toc-header"data-bs-parent="#accordionExample"><div class="accordion-body"><div class="toc-container"><a style="margin-left: 0em"href="#defined-schema">Schema</a> <a style="margin-left: 1em"href="#query-mutation-and-subscription">Query, Mutation, and Subscription</a> <a style="margin-left: 2em"href="#query">Query</a> <a style="margin-left: 2em"href="#mutation">Mutation</a> <a style="margin-left: 2em"href="#defined-subscription">Subscription</a> <a style="margin-left: 1em"href="#defined-schema-arguments">Arguments</a> <a style="margin-left: 1em"href="#lists">Lists</a> <a style="margin-left: 1em"href="#defined-optional-reqired-fields">Optional vs required fields</a> <a style="margin-left: 1em"href="#defined-directives">Directives</a> <a style="margin-left: 1em"href="#defined-interfaces">Interfaces</a> <a style="margin-left: 1em"href="#defined-union-types">Union types</a> <a style="margin-left: 1em"href="#defined-enums">Enums</a> <a style="margin-left: 1em"href="#defined-input-types">Input types</a> <a style="margin-left: 1em"href="#defined-schema-putting-it-together">Putting it together</a></div></div></div></div></div></div><h2 id="defined-schema">Schema</h2><p>The schema is the central document defining a GraphQL API. It is a mandatory part, which means you can be sure it is present for every deployment.<p>The schema defines <strong>types</strong> and <strong>fields</strong>. For example, a simple <strong>User</strong> object with a <strong>username</strong> and an <strong>email</strong> can be defined:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}</code></pre><p>Fields can reference other <em>types</em> too. For example, <strong>Users</strong> can belong to a <strong>Group</strong>:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> Group</span> {
+  name:<span class="hljs-literal"> String</span>!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+  group:<span class="hljs-literal"> Group</span>
+}</code></pre><p>With just these two things, you can define complex structures that can model to all sorts of use-cases.<div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Thinking in graphs</div><div class="tbox-body"><p>The schema defines the <strong>structure</strong> of the graph of objects. In the above example, Users have a link to a Group, but that only means the client can move from a specific <strong>User</strong> object to its corresponding <strong>Group</strong> object.</div></div></div><p>Apart from types defined in the schema, fields can be <strong>scalar</strong> too. Some are defined by GraphQL so they are guaranteed to be available in every implementation:<ul><li><code>String</code><li><code>Int</code><li><code>Float</code><li><code>Boolean</code><li><code>ID</code></ul><p><code>ID</code> is a String, it's just not meant to be used for anything other than identifying things.<h3 id="query-mutation-and-subscription">Query, Mutation, and Subscription</h3><p>(<a href="https://graphql.org/learn/schema/#the-query-and-mutation-types">Official docs</a>)<p>There are three special types in GraphQL: <strong>Query</strong>, <strong>Mutation</strong>, and <strong>Subscription</strong>.<h4 id="query">Query</h4><p>The <strong>Query</strong> defines the <strong>entry points</strong> for a client query. Think about it like REST endpoints that users can call with some parameters and they return some data. The idea here is the same, but instead of returning a fixed structure, a Query provides the first object(s) in the graph.<p>For example, a query that returns a user by its username:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  user(username:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> User</span>
+}</code></pre><p>This gets a <code>username</code>, which is a <code>String</code> (and it's required, as we'll soon see) and returns a <code>User</code>. Then the client can specify what parts of the <code>User</code> it needs by specifying the result fields. And this can span through multiple objects, traversing the graph.<p>This client query asks for a specific user, its fields, then its group:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  user(username: <span class="hljs-string">"user1"</span>) {
+    username
+    email
+    group {
+      name
+    }
+  }
+}</code></pre><p>And the result:<pre class="highlight"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"user"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"email"</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">null</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"group"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"group 1"</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><h4 id="mutation">Mutation</h4><p>(<a href="https://graphql.org/learn/queries/">Official docs</a>)<p><strong>Mutations</strong> are similar to queries, the difference is only conceptually. They also can get arguments and they can also return objects that clients can use to navigate the graph. But mutations are used to <strong>change data</strong> instead of query it.<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Mutation</span> {
+  addUser(username:<span class="hljs-literal"> String</span>!, email:<span class="hljs-literal"> String</span>):<span class="hljs-literal"> User</span>
+}</code></pre><p>And to add the user:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">mutation</span> addUser {
+  addUser(username: <span class="hljs-string">"new user"</span>){
+    username
+    email
+  }
+}</code></pre><p>This call creates a User object using the arguments provided (<code>username</code>), then return the <em>username</em> and the <em>email</em> fields of the new User.<div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Query vs Mutation</div><div class="tbox-body"><p>The only difference between a Query and a Mutation is conceptual:<ul><li>Queries only <em>retrieve</em> data<li>Mutations can <em>change</em> data</ul><p>But there is nothing that enforces this distinction. We'll see in the <a href="/graphql-basics/resolvers/#defined-resolvers">Resolvers</a> chapter how to implement what a Query/Mutation does and nothing stops you if you write a Query that modifies data. There are things, such as Subscriptions and caching, that depend on a clear separation of read-only/read-write operations, but otherwise they work the same.</div></div></div><h4 id="defined-subscription">Subscription</h4><p>Finally, <strong>Subscriptions</strong> provide a real-time notification channel clients can subscribe to and get events when some data is changed. This is especially useful when you want to build a real-time frontend that automatically fetch new data when it is available. For example, a chat application can work by all participants subscibing to message updates, and whenever a participant wants to sends a message it calls a Mutation.<figure class="plantuml image"><svg xmlns="http://www.w3.org/2000/svg"height="369"preserveAspectRatio="none"style="width:423px;height:369px;background:#fff"viewBox="0 0 423 369"width="423"><defs><filter height="300%"id="a5d78b3f35eb214fed0de80ad09cfe38e42a721514d19eb043d709ff41242c4d__a"width="300%"x="-1"y="-1"><feGaussianBlur result="blurOut"stdDeviation="2"></feGaussianBlur><feColorMatrix in="blurOut"result="blurOut2"values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"></feColorMatrix><feOffset dx="4"dy="4"in="blurOut2"result="blurOut3"></feOffset><feBlend in="SourceGraphic"in2="blurOut3"></feBlend></filter></defs><path style="stroke:#a80036;stroke-width:1"d="M34 53.297v212.797"></path><path style="stroke:#a80036;stroke-width:1;stroke-dasharray:1,4"d="M34 266.094v28"></path><path style="stroke:#a80036;stroke-width:1"d="M34 294.094v68.265M208 53.297v212.797"></path><path style="stroke:#a80036;stroke-width:1;stroke-dasharray:1,4"d="M208 266.094v28"></path><path style="stroke:#a80036;stroke-width:1"d="M208 294.094v68.265M382 53.297v212.797"></path><path style="stroke:#a80036;stroke-width:1;stroke-dasharray:1,4"d="M382 266.094v28"></path><path style="stroke:#a80036;stroke-width:1"d="M382 294.094v68.265"></path><path fill="#FEFECE"filter="url(#a5d78b3f35eb214fed0de80ad09cfe38e42a721514d19eb043d709ff41242c4d__a)"style="stroke:#a80036;stroke-width:1.5;fill:#fefece"d="M5 18h54v30.297H5z"></path><text font-family="sans-serif"font-size="14"textLength="40"x="12"y="37.995">user1</text><text font-family="sans-serif"font-size="14"textLength="60"x="175"y="49.995">GraphQL</text><circle cx="208"cy="21"fill="#FEFECE"filter="url(#a5d78b3f35eb214fed0de80ad09cfe38e42a721514d19eb043d709ff41242c4d__a)"style="stroke:#a80036;stroke-width:2"r="12"></circle><path fill="#A80036"style="stroke:#a80036;stroke-width:1;fill:#a80036"d="m204 9 6-5-2 5 2 5-6-5z"></path><path fill="#FEFECE"filter="url(#a5d78b3f35eb214fed0de80ad09cfe38e42a721514d19eb043d709ff41242c4d__a)"style="stroke:#a80036;stroke-width:1.5;fill:#fefece"d="M353 18h54v30.297h-54z"></path><text font-family="sans-serif"font-size="14"textLength="40"x="360"y="37.995">user2</text><path fill="#EEE"filter="url(#a5d78b3f35eb214fed0de80ad09cfe38e42a721514d19eb043d709ff41242c4d__a)"style="stroke:#eee;stroke-width:1;fill:#eee"d="M0 83.863h416v3H0z"></path><path style="stroke:#000;stroke-width:1"d="M0 83.863h416m-416 3h416"></path><path fill="#EEE"filter="url(#a5d78b3f35eb214fed0de80ad09cfe38e42a721514d19eb043d709ff41242c4d__a)"style="stroke:#000;stroke-width:2;fill:#eee"d="M156.5 73.297h103V96.43h-103z"></path><text font-family="sans-serif"font-size="13"font-weight="bold"textLength="89"x="162.5"y="89.364">Initialization</text><path fill="#A80036"style="stroke:#a80036;stroke-width:1;fill:#a80036"d="m196 123.563 10 4-10 4 4-4z"></path><path style="stroke:#a80036;stroke-width:1"d="M34 127.563h168"></path><text font-family="sans-serif"font-size="13"textLength="61"x="41"y="122.497">subscribe</text><path fill="#A80036"style="stroke:#a80036;stroke-width:1;fill:#a80036"d="m219 152.695-10 4 10 4-4-4z"></path><path style="stroke:#a80036;stroke-width:1"d="M213 156.695h168"></path><text font-family="sans-serif"font-size="13"textLength="61"x="225"y="151.629">subscribe</text><path fill="#EEE"filter="url(#a5d78b3f35eb214fed0de80ad09cfe38e42a721514d19eb043d709ff41242c4d__a)"style="stroke:#eee;stroke-width:1;fill:#eee"d="M0 185.262h416v3H0z"></path><path style="stroke:#000;stroke-width:1"d="M0 185.262h416m-416 3h416"></path><path fill="#EEE"filter="url(#a5d78b3f35eb214fed0de80ad09cfe38e42a721514d19eb043d709ff41242c4d__a)"style="stroke:#000;stroke-width:2;fill:#eee"d="M123 174.695h170v23.133H123z"></path><text font-family="sans-serif"font-size="13"font-weight="bold"textLength="156"x="129"y="190.762">Real-time messaging</text><path fill="#A80036"style="stroke:#a80036;stroke-width:1;fill:#a80036"d="m196 224.96 10 4-10 4 4-4z"></path><path style="stroke:#a80036;stroke-width:1"d="M34 228.961h168"></path><text font-family="sans-serif"font-size="13"textLength="150"x="41"y="223.895">mutation sendMessage</text><path fill="#A80036"style="stroke:#a80036;stroke-width:1;fill:#a80036"d="m370 254.094 10 4-10 4 4-4z"></path><path style="stroke:#a80036;stroke-width:1"d="M208 258.094h168"></path><text font-family="sans-serif"font-size="13"textLength="59"x="215"y="253.028">message</text><path fill="#A80036"style="stroke:#a80036;stroke-width:1;fill:#a80036"d="m219 311.227-10 4 10 4-4-4z"></path><path style="stroke:#a80036;stroke-width:1"d="M213 315.227h168"></path><text font-family="sans-serif"font-size="13"textLength="150"x="225"y="310.161">mutation sendMessage</text><path fill="#A80036"style="stroke:#a80036;stroke-width:1;fill:#a80036"d="m45 340.36-10 4 10 4-4-4z"></path><path style="stroke:#a80036;stroke-width:1"d="M39 344.359h168"></path><text font-family="sans-serif"font-size="13"textLength="59"x="51"y="339.293">message</text></svg><figcaption class="caption">Real-time notifications</figcaption></figure><div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Note</div><div class="tbox-body"><p>Subscriptions are not supported in all GraphQL implementations. AppSync supports them using a WebSocket channel.</div></div></div><h3 id="defined-schema-arguments">Arguments</h3><p>(<a href="https://graphql.org/learn/queries/#arguments">Official docs</a>)<p>Arguments in the schema can be defined for any fields of any type. In the previous examples we've seen how they work for Queries and Mutations:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> Mutation</span> {
+  addUser(username:<span class="hljs-literal"> String</span>!, email:<span class="hljs-literal"> String</span>):<span class="hljs-literal"> User</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  user(username:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> User</span>
+}</code></pre><p>But arguments also work for "normal" fields too. Let's say users can have tickets, such as in a ticketing system, and we want to provide a way to get a user's tickets with an optional date filter:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Ticket</span> {
+  text:<span class="hljs-literal"> String</span>!
+  <span class="hljs-comment"># POSIX time</span>
+  created:<span class="hljs-literal"> Int</span>!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  tickets(after:<span class="hljs-literal"> Int</span>): [<span class="hljs-literal">Ticket</span>]
+}</code></pre><p>When a nested field needs arguments, the client query can specify that:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  user(username: <span class="hljs-string">"user1"</span>) {
+    username
+    tickets(after: <span class="hljs-number">1639907490</span>) {
+      text
+      created
+    }
+  }
+}</code></pre><p>When a field does not need arguments in the schema or a client query does not provide them the <code>(...)</code> is missing. The <code>username</code> field in the previous example does not need an argument, but the <code>tickets</code> does. Also, when an argument is <em>optional</em> and the client query chooses not to use that, the parentheses are missing.<div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Note</div><div class="tbox-body"><p>How the arguments are used is up to the implementation. GraphQL by default does not handle things like <code>after</code>, <code>limit</code>, <code>offset</code>, or any other arguments.</div></div></div><h3 id="lists">Lists</h3><p>(<a href="https://graphql.org/learn/schema/#lists-and-non-null">Official docs</a>)<p>In our examples so far all the fields contained a single value, for example, the User can be part of a single Group. GraphQL supports Lists to define a one-to-many relationship between objects. This is done using the <code>[...]</code> construct.<p>For example, a Group can contain multiple (0 or more) Users:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Group</span> {
+  name:<span class="hljs-literal"> String</span>!
+  users: [<span class="hljs-literal">User</span>]
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+  group:<span class="hljs-literal"> Group</span>
+}</code></pre><p>In a client query there are no differences between a single value (<code>Group</code>) or a List (<code>[User]</code>). The response will contain a JSON array if the field is a List, and an object otherwise.<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  user(username: <span class="hljs-string">"user1"</span>) {
+    username
+    email
+    group {
+      name
+      users {
+        username
+      }
+    }
+  }
+}</code></pre><p>And the response contains all the users in the group:<pre class="highlight"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"user"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"email"</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">null</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"group"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"group 1"</span>
+        <span class="hljs-attr">"users"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+          <span class="hljs-punctuation">{</span>
+            <span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user1"</span>
+          <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+          <span class="hljs-punctuation">{</span>
+            <span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"user2"</span>
+          <span class="hljs-punctuation">}</span>
+        <span class="hljs-punctuation">]</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><h3 id="defined-optional-reqired-fields">Optional vs required fields</h3><p>GraphQL schema supports marking a field (or argument) as <strong>required</strong> by adding a <code>!</code> after it. We've already defined this for the User type:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}</code></pre><p>Here, the <code>username</code> is required, so the response can not be <code>null</code> for this field, while the <code>email</code> is optional. If a client queries both fields, the response is guaranteed to have a non-null value for the <code>username</code>.<p>In case of Lists, the required indicator can go to two places, each specifying a different requirement:<ul><li><code>[User!]</code>: The list can not contain <code>null</code>s<li><code>[User]!</code>: The list itself can not be <code>null</code></ul><p>Here's a table showing what each combination allows:<table class="prevp"><thead><tr><th><th style="text-align: center;">[User, User]<th style="text-align: center;">[User, null]<th style="text-align: center;">[]<th style="text-align: center;">null<tbody><tr><td><code>[User]</code><td style="text-align: center;">✓<td style="text-align: center;">✓<td style="text-align: center;">✓<td style="text-align: center;">✓<tr><td><code>[User!]</code><td style="text-align: center;">✓<td style="text-align: center;">-<td style="text-align: center;">✓<td style="text-align: center;">✓<tr><td><code>[User]!</code><td style="text-align: center;">✓<td style="text-align: center;">✓<td style="text-align: center;">✓<td style="text-align: center;">-<tr><td><code>[User!]!</code><td style="text-align: center;">✓<td style="text-align: center;">-<td style="text-align: center;">✓<td style="text-align: center;">-</table><p>In practice, most Lists are the strictest variety (<code>[User!]!</code>) as it does not prevent returning empty lists but the caller can be sure it only contains non-null items.<div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Note</div><div class="tbox-body"><p>The same type system is used for <strong>arguments</strong> too. For example, this Query requires a <code>username</code> and a list of non-null <code>permissions</code>:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  user(username:<span class="hljs-literal"> String</span>!, permissions: [<span class="hljs-literal">String</span>!]!):<span class="hljs-literal"> User</span>
+}</code></pre></div></div></div><h3 id="defined-directives">Directives</h3><p>(<a href="https://graphql.org/learn/queries/#directives">Official docs</a>)<p>Directives are extra metadata for fields and types. For example, Amplify <a href="https://docs.amplify.aws/cli-legacy/graphql-transformer/model/#definition">uses</a> the <code>@model</code> directive to generate DynamoDB tables, queries, and mutations for a type:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> Post</span> <span class="hljs-meta">@model</span> {
+  id: <span class="hljs-literal">ID</span>! <span class="hljs-comment"># id: ID! is a required attribute.</span>
+  title:<span class="hljs-literal"> String</span>!
+  tags: [<span class="hljs-literal">String</span>!]!
+}</code></pre><p>Also, access control can use directives to define who can get a field, query, or mutation:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  <span class="hljs-comment"># everybody can get themselves</span>
+  currentUser:<span class="hljs-literal"> User</span>
+
+  <span class="hljs-comment"># only admins can query all users</span>
+  allUsers: [<span class="hljs-literal">User</span>]
+  <span class="hljs-meta">@aws_cognito_user_pools</span>(cognito_groups: [<span class="hljs-literal">"admin"</span>])
+}</code></pre><div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Note</div><div class="tbox-body"><p>Directives come <strong>after</strong> the type of field definition, not before. If you've worked with <a href="https://docs.oracle.com/javase/tutorial/java/annotations/basics.html">Java annotations</a> before it will require some getting used to.</div></div></div><h3 id="defined-interfaces">Interfaces</h3><p>(<a href="https://graphql.org/learn/schema/#interfaces">Official docs</a>)<p>GraphQL supports <strong>interfaces</strong> that fill a similar role that in most programming languages. When a field can return multiple types and they can be logically grouped into an abstract type, you can move the common structure into an interface and use that instead.<p>For example, let's say the system can handle two types of users: administrators and normal users:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> AdminUser</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+  permissions: [<span class="hljs-literal">String</span>!]!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> NormalUser</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}</code></pre><p>A list that returns all users in the system could specify in interface that both user types implement:<pre class="highlight"><code><span class="hljs-comment"># defines what is common in all users</span>
+<span class="hljs-keyword">interface</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> AdminUser</span> <span class="hljs-keyword">implements</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+  permissions: [<span class="hljs-literal">String</span>!]!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> NormalUser</span> <span class="hljs-keyword">implements</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}</code></pre><p>Then the query can return <code>User</code>s without defining the exact type:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  allUsers: [<span class="hljs-literal">User</span>!]!
+}</code></pre><div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Note</div><div class="tbox-body"><p>Types that implement the interface need to list all the inherited fields too. This leads to some repetition in the schema, such as the <code>username</code> is listed 3 times: for the <code>User</code>, the <code>AdminUser</code>, and the <code>NormalUser</code>.</div></div></div><p>Client queries can use a special construct to distinguish between the concrete types as we'll discuss in the <a href="/graphql-basics/queries-and-mutations/#defined-inline-fragments">Inline fragments</a> chapter:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  allUsers {
+    username
+    email
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> AdminUser</span> {
+      permissions
+    }
+  }
+}</code></pre><p>The result will include the <code>permissions</code> field only for administrators, and the <code>username</code> and the <code>email</code> for all users.<h3 id="defined-union-types">Union types</h3><p>(<a href="https://graphql.org/learn/schema/#union-types">Official docs</a>)<p>Interfaces are great when there is a common logical ancestor to all the types a field needs to return, but it's not the case every time. This is when <strong>union types</strong> are useful. The official docs has a great example for this use-case: search results.<p>A ticketing system might handle <code>User</code>s and <code>Ticket</code>s and needs to provide a search functionality. Here, it would unnecessarily complicate the schema to add a common interface for every type the search can return. Instead, it can define that it return either a <code>User</code> or an <code>Ticket</code>:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Ticket</span> {
+  text:<span class="hljs-literal"> String</span>!
+}
+
+<span class="hljs-keyword">union</span><span class="hljs-literal"> SearchResult</span> =<span class="hljs-literal"> User</span> |<span class="hljs-literal"> Ticket</span>
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  search(<span class="hljs-keyword">query</span>:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> SearchResult</span>
+}</code></pre><p>The client queries can use inline fragments just like with interfaces:<pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  search(<span class="hljs-keyword">query</span>: <span class="hljs-string">"test"</span>) {
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> User</span> {
+      username
+      email
+    }
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> Ticket</span> {
+      text
+    }
+  }
+}</code></pre><h3 id="defined-enums">Enums</h3><p>(<a href="https://graphql.org/learn/schema/#enumeration-types">Official docs</a>)<p>Enums are also a common feature in most programming languages. They are a scalar that's value can be from a predefined list.<p>For example, tickets can be in one of three states:<pre class="highlight"><code><span class="hljs-keyword">enum</span><span class="hljs-type"> STATUS</span> {
+   <span class="hljs-type"> OPEN</span>
+   <span class="hljs-type"> IN_PROGRESS</span>
+   <span class="hljs-type"> DONE</span>
+}
+
+<span class="hljs-comment"># can be used in fields</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Ticket</span> {
+  id: <span class="hljs-literal">ID</span>!
+  status:<span class="hljs-type"> STATUS</span>!
+  description:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-comment"># can be used in arguments</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  getTickets(status:<span class="hljs-type"> STATUS</span>): [<span class="hljs-literal">Ticket</span>!]!
+}</code></pre><div class="floatbox floatbox-center"><div class="tcolorbox tcolorbox-info"><div class="tbox-header">Note</div><div class="tbox-body"><p>Enums provide stricter validation than a <code>String</code> field.</div></div></div><h3 id="defined-input-types">Input types</h3><p>(<a href="https://graphql.org/learn/schema/#input-types">Official docs</a>)<p>Arguments can use scalar types (<code>String</code>, <code>Int</code>, and so on), but they can't use types that you defined in the schema. For example, you can't pass a <code>User</code> to a mutation.<p>This is where <strong>input types</strong> are useful. They are like normal types, but they are for arguments. They can also contain other input types and scalars.<p>For example, if you want a mutation to create a new User object, you need to create a new input type that is similar to output type:<pre class="highlight"><code><span class="hljs-keyword">input</span><span class="hljs-literal"> UserInput</span> {
+  username:<span class="hljs-literal"> String</span>!
+  avatar:<span class="hljs-literal"> String</span>
+  cv:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  avatar:<span class="hljs-literal"> String</span>
+  cv:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Mutation</span> {
+  addUser(user:<span class="hljs-literal"> UserInput</span>):<span class="hljs-literal"> User</span>
+}</code></pre><p>Using input types is usually only a technical requirement and something that duplicates some code. But since GraphQL needs them for arguments, you'll have to use them for anything that is not a scalar.<h3 id="defined-schema-putting-it-together">Putting it together</h3><p>(<a href="https://github.com/sashee/graphql-example/blob/main/schema.graphql">Example code</a>)<p>Let's make a GraphQL schema using the elements we discussed above! In this example, we have a simple ticketing system where tickets can be added and assigned to users. Tickets can also have attachments, that can be either images or files.<figure class="plantuml image"><svg xmlns="http://www.w3.org/2000/svg"height="251"preserveAspectRatio="none"style="width:515px;height:251px;background:#fff"viewBox="0 0 515 251"width="515"><defs><filter height="300%"id="3252f8a3e3577adb618f3953408b5d43e8bfdff8cdfd5cc0e7c4d56557e3c6ff__a"width="300%"x="-1"y="-1"><feGaussianBlur result="blurOut"stdDeviation="2"></feGaussianBlur><feColorMatrix in="blurOut"result="blurOut2"values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"></feColorMatrix><feOffset dx="4"dy="4"in="blurOut2"result="blurOut3"></feOffset><feBlend in="SourceGraphic"in2="blurOut3"></feBlend></filter></defs><path fill="#FEFECE"filter="url(#3252f8a3e3577adb618f3953408b5d43e8bfdff8cdfd5cc0e7c4d56557e3c6ff__a)"style="stroke:#a80036;stroke-width:1.5;fill:#fefece"d="M139.5 7h172v116.828h-172z"></path><circle cx="202.75"cy="23"fill="#FFF"style="stroke:#a80036;stroke-width:1"r="11"></circle><path d="M203.594 29.75h-2.453V19.5H198v-2.14h8.734v2.14h-3.14v10.25Z"></path><text font-family="sans-serif"font-size="12"textLength="37"x="223.25"y="27.154">Ticket</text><path style="stroke:#a80036;stroke-width:1.5"d="M140.5 39h170"></path><text font-family="sans-serif"font-size="11"textLength="32"x="145.5"y="53.21">id: ID!</text><text font-family="sans-serif"font-size="11"textLength="66"x="145.5"y="66.015">title: String!</text><text font-family="sans-serif"font-size="11"textLength="108"x="145.5"y="78.82">description: String!</text><text font-family="sans-serif"font-size="11"textLength="70"x="145.5"y="91.624">owner: User</text><text font-family="sans-serif"font-size="11"textLength="160"x="145.5"y="104.429">severity: CRITICAL | NORMAL</text><text font-family="sans-serif"font-size="11"textLength="157"x="145.5"y="117.234">attachments: [Attachment!]!</text><path fill="#FEFECE"filter="url(#3252f8a3e3577adb618f3953408b5d43e8bfdff8cdfd5cc0e7c4d56557e3c6ff__a)"style="stroke:#a80036;stroke-width:1.5;fill:#fefece"d="M7 31h89v65.609H7z"></path><circle cx="34.6"cy="47"fill="#FFF"style="stroke:#a80036;stroke-width:1"r="11"></circle><path d="M35.444 53.75H32.99V43.5h-3.14v-2.14h8.734v2.14h-3.14v10.25Z"></path><text font-family="sans-serif"font-size="12"textLength="29"x="51.4"y="51.154">User</text><path style="stroke:#a80036;stroke-width:1.5"d="M8 63h87"></path><text font-family="sans-serif"font-size="11"textLength="32"x="13"y="77.21">id: ID!</text><text font-family="sans-serif"font-size="11"textLength="77"x="13"y="90.015">name: String!</text><path fill="#FEFECE"filter="url(#3252f8a3e3577adb618f3953408b5d43e8bfdff8cdfd5cc0e7c4d56557e3c6ff__a)"style="stroke:#a80036;stroke-width:1.5;fill:#fefece"d="M355 31h105v65.609H355z"></path><circle cx="370"cy="47"fill="#B4A7E5"style="stroke:#a80036;stroke-width:1"r="11"></circle><path d="M365.922 42.766v-2.157h7.39v2.157h-2.468v8.078h2.469V53h-7.391v-2.156h2.469v-8.078h-2.47Z"></path><text font-family="sans-serif"font-size="12"font-style="italic"textLength="73"x="384"y="51.154">Attachment</text><path style="stroke:#a80036;stroke-width:1.5"d="M356 63h103"></path><text font-family="sans-serif"font-size="11"textLength="32"x="361"y="77.21">id: ID!</text><text font-family="sans-serif"font-size="11"textLength="60"x="361"y="90.015">url: String!</text><path fill="#FEFECE"filter="url(#3252f8a3e3577adb618f3953408b5d43e8bfdff8cdfd5cc0e7c4d56557e3c6ff__a)"style="stroke:#a80036;stroke-width:1.5;fill:#fefece"d="M278 185h129v52.805H278z"></path><circle cx="319.55"cy="201"fill="#FFF"style="stroke:#a80036;stroke-width:1"r="11"></circle><path d="M320.394 207.75h-2.453V197.5H314.8v-2.14h8.734v2.14h-3.14v10.25Z"></path><text font-family="sans-serif"font-size="12"textLength="38"x="339.45"y="205.154">Image</text><path style="stroke:#a80036;stroke-width:1.5"d="M279 217h127"></path><text font-family="sans-serif"font-size="11"textLength="117"x="284"y="231.21">content_type: String!</text><path fill="#FEFECE"filter="url(#3252f8a3e3577adb618f3953408b5d43e8bfdff8cdfd5cc0e7c4d56557e3c6ff__a)"style="stroke:#a80036;stroke-width:1.5;fill:#fefece"d="M442 185h59v52.805h-59z"></path><circle cx="459.7"cy="201"fill="#FFF"style="stroke:#a80036;stroke-width:1"r="11"></circle><path d="M460.544 207.75h-2.453V197.5h-3.141v-2.14h8.734v2.14h-3.14v10.25Z"></path><text font-family="sans-serif"font-size="12"textLength="21"x="474.3"y="205.154">File</text><path style="stroke:#a80036;stroke-width:1.5"d="M443 217h57"></path><text font-family="sans-serif"font-size="11"textLength="47"x="448"y="231.21">size: Int!</text><path d="M384.81 115.79c-10.38 23.23-22.22 49.75-30.74 68.81m24.46-71.9 14.54-15.41-1.76 21.12-12.78-5.71zm51.31 3.09c10.22 23.23 21.88 49.75 30.27 68.81m-36.76-66.18-1.65-21.13 14.46 15.49-12.81 5.64zM312.5 111c21.6 7.86 43.32 2.04 60.43-8.17"fill="none"style="stroke:#a80036;stroke-width:1;fill:none"></path><path fill="#A80036"style="stroke:#a80036;stroke-width:1;fill:#a80036"d="m381.44 97.13-9.707 1.664 5.547 1.11-1.11 5.547 5.27-8.321z"></path><path d="M96.1 80.35c13.4 3.74 28.34 6.65 42.4 6.65"fill="none"style="stroke:#a80036;stroke-width:1;fill:none"></path><path fill="#A80036"style="stroke:#a80036;stroke-width:1;fill:#a80036"d="m96.1 80.35 7.593 6.272-2.777-4.928 4.928-2.777L96.1 80.35z"></path></svg><figcaption class="caption">Data model</figcaption></figure><p>Types for Tickets and Users:<pre class="highlight"><code><span class="hljs-keyword">enum</span><span class="hljs-type"> SEVERITY</span> {
+   <span class="hljs-type"> CRITICAL</span>
+   <span class="hljs-type"> NORMAL</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Ticket</span> {
+  id: <span class="hljs-literal">ID</span>!
+  title:<span class="hljs-literal"> String</span>!
+  description:<span class="hljs-literal"> String</span>!
+  owner:<span class="hljs-literal"> User</span>
+  severity:<span class="hljs-type"> SEVERITY</span>!
+  attachments: [<span class="hljs-literal">Attachment</span>!]!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  id: <span class="hljs-literal">ID</span>!
+  name:<span class="hljs-literal"> String</span>!
+}</code></pre><p>The <code>SEVERITY</code> is an <a href="#defined-enums">enum</a> that restricts the value of the <code>Ticket.severity</code> field to either <code>CRITICAL</code> or <code>NORMAL</code>. Then most of the fields are <a href="#defined-optional-reqired-fields">required</a>, such as the <code>title: String!</code>, but there is an <strong>optional</strong> field too: <code>owner: User</code>. This means that a Ticket must have a title but it might not have an owner.<p>Also, this schema contains <a href="/graphql-basics/resolvers/#defined-lists">lists</a>: <code>attachments: [Attachment!]!</code> and <code>[Ticket!]!</code>. With the double <code>!</code>, the field must contain a list, and every item must be an <code>Attachment</code> (first case) or a <code>Ticket</code> (second case).<p>Types for Attachments:<pre class="highlight"><code><span class="hljs-keyword">interface</span><span class="hljs-literal"> Attachment</span> {
+  id: <span class="hljs-literal">ID</span>!
+  url:<span class="hljs-literal"> String</span>!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Image</span> <span class="hljs-keyword">implements</span><span class="hljs-literal"> Attachment</span> {
+  id: <span class="hljs-literal">ID</span>!
+  url:<span class="hljs-literal"> String</span>!
+  content_type:<span class="hljs-literal"> String</span>!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> File</span> <span class="hljs-keyword">implements</span><span class="hljs-literal"> Attachment</span> {
+  id: <span class="hljs-literal">ID</span>!
+  url:<span class="hljs-literal"> String</span>!
+  size:<span class="hljs-literal"> Int</span>!
+}</code></pre><p>The <code>Attachment</code> is an <a href="#defined-interfaces">interface</a> so it can appear as a type for fields, such as the <code>attachments: [Attachment!]!</code>, but it has to be a concrete type. In this case, that can either be <code>Image</code> or <code>File</code>. Note that all these types need to define the common fields (<code>id</code> and <code>url</code>).<p>Now that we have the object graph, let's define two queries, one to get all the Tickets in the system, and the other for a free-form search that can return a Ticket or a User:<pre class="highlight"><code><span class="hljs-keyword">union</span><span class="hljs-literal"> SearchResult</span> =<span class="hljs-literal"> Ticket</span> |<span class="hljs-literal"> User</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  getTickets: [<span class="hljs-literal">Ticket</span>!]!
+  search(<span class="hljs-keyword">query</span>:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> SearchResult</span>
+}</code></pre><p>The <code>search</code> query returns a <a href="#defined-union-types">union type</a>: it can be either a <code>Ticket</code> or a <code>User</code>. Also, the <code>search</code> query uses an <a href="#defined-schema-arguments">argument</a> that the resolver will get.<p>Finally, let's add two mutations, one to add a new Ticket and one to delete an existing one:<pre class="highlight"><code><span class="hljs-keyword">input</span><span class="hljs-literal"> TicketInput</span> {
+  title:<span class="hljs-literal"> String</span>!
+  description:<span class="hljs-literal"> String</span>!
+  severity:<span class="hljs-type"> SEVERITY</span>!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Mutation</span> {
+  addTicket(details:<span class="hljs-literal"> TicketInput</span>!, owner: <span class="hljs-literal">ID</span>):<span class="hljs-literal"> Ticket</span>!
+
+  deleteTicket(id: <span class="hljs-literal">ID</span>!): <span class="hljs-literal">ID</span>
+  <span class="hljs-meta">@aws_cognito_user_pools</span>(cognito_groups: [<span class="hljs-literal">"admin"</span>])
+}
+
+<span class="hljs-keyword">schema</span> {
+  <span class="hljs-keyword">query</span>:<span class="hljs-literal"> Query</span>
+  <span class="hljs-keyword">mutation</span>:<span class="hljs-literal"> Mutation</span>
+}</code></pre><p>The <code>addTicket</code> defines a <code>details</code> argument which is not a scalar type, so it needs the <code>TicketInput</code> <a href="#defined-input-types">input type</a>. With this, callers can define the <code>title</code> and the <code>description</code> in one argument, and an optional <code>owner</code> in a second one.<p>Finally, the <code>deleteTicket</code> uses a <a href="#defined-directives">directive</a> to restrict callers to the <code>admin</code> Cognito group. Note that this is an AppSync-specific directive.<div class="tcolorbox tcolorbox-secondary my-5"><div class="tbox-header fw-bold">Master AppSync and GraphQL</div><div class="tbox-body"><div>Support this book and get all future updates and extra chapters in ebook format.</div><div class="d-flex justify-content-center"><a role="button"href="https://tsallai.gumroad.com/l/graphql-on-aws-appsync-book"class="btn btn-primary not-styled mt-3 text-white">Buy the book</a></div></div></div><div class="pagination row"><div class="col-6"><a href="/graphql-basics/graphql-vs-rest/"class="border rounded d-block p-3"><div class="pagination-sublabel text-muted small">Previous</div><div class="pagination-title">&lt; GraphQL vs REST</div></a></div><div class="col-6"><a href="/graphql-basics/queries-and-mutations/"class="border rounded d-block p-3 text-end ms-auto"><div class="pagination-sublabel text-muted small">Next</div><div class="pagination-title">Queries and Mutations &gt;</div></a></div></div><footer>© Tamás Sallai - <a href="https://advancedweb.hu">advancedweb.hu</a></footer></div><div class="col-lg-3 d-none d-lg-block"><div class="toc-container"><a style="margin-left: 0em"href="#defined-schema">Schema</a> <a style="margin-left: 1em"href="#query-mutation-and-subscription">Query, Mutation, and Subscription</a> <a style="margin-left: 2em"href="#query">Query</a> <a style="margin-left: 2em"href="#mutation">Mutation</a> <a style="margin-left: 2em"href="#defined-subscription">Subscription</a> <a style="margin-left: 1em"href="#defined-schema-arguments">Arguments</a> <a style="margin-left: 1em"href="#lists">Lists</a> <a style="margin-left: 1em"href="#defined-optional-reqired-fields">Optional vs required fields</a> <a style="margin-left: 1em"href="#defined-directives">Directives</a> <a style="margin-left: 1em"href="#defined-interfaces">Interfaces</a> <a style="margin-left: 1em"href="#defined-union-types">Union types</a> <a style="margin-left: 1em"href="#defined-enums">Enums</a> <a style="margin-left: 1em"href="#defined-input-types">Input types</a> <a style="margin-left: 1em"href="#defined-schema-putting-it-together">Putting it together</a></div></div></div></div></div><script src="/assets/main.077454cb0bffe3695e9176b1b5f8a7fd9676d920.js"></script>

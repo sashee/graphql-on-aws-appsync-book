@@ -1,0 +1,180 @@
+<!doctypehtml><html lang="en"><meta charset="utf-8"><link rel="icon"type="image/svg+xml"href="/assets/favicon.15621087ab873d484cfdc234ae6d4f0559d2ece6.svg"><meta name="viewport"content="width=device-width,initial-scale=1"><link href="/assets/main.d3c4fd66da45b5fe1b587fd7bc4b64cc7a34bcf3.css"rel="stylesheet"><title>Glossary - Building GraphQL APIs with AWS AppSync</title><nav class="navbar navbar-light"><div class="container-fluid flex-nowrap"><a class="navbar-brand"href="/">Building GraphQL APIs with AWS AppSync</a> <button class="navbar-toggler d-lg-none align-self-start"type="button"data-bs-toggle="offcanvas"data-bs-target="#offcanvasNavbar"aria-controls="offcanvasNavbar"><span class="navbar-toggler-icon"></span></button><div class="offcanvas offcanvas-end"tabindex="-1"id="offcanvasNavbar"aria-labelledby="offcanvasNavbarLabel"><div class="offcanvas-header"><h5 class="offcanvas-title"id="offcanvasNavbarLabel">Building GraphQL APIs with AWS AppSync</h5><button type="button"class="btn-close text-reset"data-bs-dismiss="offcanvas"aria-label="Close"></button></div><div class="offcanvas-body keep-scrolltop"><ul class="nav navbar-nav justify-content-end flex-grow-1 pe-3"><li class="nav-item"><a class="nav-link"href="/introduction/">Introduction</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/">GraphQL basics</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/graphql-basics/graphql-vs-rest/">GraphQL vs REST</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/schema/">Schema</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/queries-and-mutations/">Queries and Mutations</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/resolvers/">Resolvers</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/access-control/">Access control</a></ul><li class="nav-item"><a class="nav-link"href="/aws-appsync/">AWS AppSync</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/">API configuration</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/authorization-providers/">Authorization providers</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/logging-and-monitoring/">Logging and monitoring</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/custom-domains/">Custom domains</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/waf/">WAF</a></ul><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/">Data sources</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/lambda-1/">Lambda</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/dynamodb/">DynamoDB</a><li class="nav-item"><span class="nav-link">HTTP 🚧</span><li class="nav-item"><span class="nav-link">RDS 🚧</span><li class="nav-item"><span class="nav-link">None 🚧</span></ul><li class="nav-item"><span class="nav-link">Resolvers 🚧</span><li class="nav-item"><span class="nav-link">Authorization 🚧</span><li class="nav-item"><span class="nav-link">Error handling 🚧</span><li class="nav-item"><span class="nav-link">Real-time data with subscriptions 🚧</span></ul><li class="nav-item"><span class="nav-link">Infrastructure-as-code 🚧</span><ul class="nav flex-column"><li class="nav-item"><span class="nav-link">Terraform 🚧</span><li class="nav-item"><span class="nav-link">CDK 🚧</span><li class="nav-item"><span class="nav-link">Amplify 🚧</span></ul><li class="nav-item"><span class="nav-link">Example application 🚧</span><li class="nav-item"><a class="nav-link active"href="/glossary/">Glossary</a><li class="nav-item"><a class="nav-link"href="/about-the-author/">About the author</a><li class="nav-item"><a class="nav-link"href="/changelog/">Changelog</a><li class="nav-item"><a class="nav-link"href="/copyright/">Copyright</a></ul></div></div></div></nav><div class="d-flex flex-row"><ul class="nav flex-column navigation flex-shrink-0 flex-nowrap overflow-auto d-none d-lg-flex keep-scrolltop"><li class="nav-item"><a class="nav-link"href="/introduction/">Introduction</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/">GraphQL basics</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/graphql-basics/graphql-vs-rest/">GraphQL vs REST</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/schema/">Schema</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/queries-and-mutations/">Queries and Mutations</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/resolvers/">Resolvers</a><li class="nav-item"><a class="nav-link"href="/graphql-basics/access-control/">Access control</a></ul><li class="nav-item"><a class="nav-link"href="/aws-appsync/">AWS AppSync</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/">API configuration</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/authorization-providers/">Authorization providers</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/logging-and-monitoring/">Logging and monitoring</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/custom-domains/">Custom domains</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/api-configuration/waf/">WAF</a></ul><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/">Data sources</a><ul class="nav flex-column"><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/lambda-1/">Lambda</a><li class="nav-item"><a class="nav-link"href="/aws-appsync/data-sources/dynamodb/">DynamoDB</a><li class="nav-item"><span class="nav-link">HTTP 🚧</span><li class="nav-item"><span class="nav-link">RDS 🚧</span><li class="nav-item"><span class="nav-link">None 🚧</span></ul><li class="nav-item"><span class="nav-link">Resolvers 🚧</span><li class="nav-item"><span class="nav-link">Authorization 🚧</span><li class="nav-item"><span class="nav-link">Error handling 🚧</span><li class="nav-item"><span class="nav-link">Real-time data with subscriptions 🚧</span></ul><li class="nav-item"><span class="nav-link">Infrastructure-as-code 🚧</span><ul class="nav flex-column"><li class="nav-item"><span class="nav-link">Terraform 🚧</span><li class="nav-item"><span class="nav-link">CDK 🚧</span><li class="nav-item"><span class="nav-link">Amplify 🚧</span></ul><li class="nav-item"><span class="nav-link">Example application 🚧</span><li class="nav-item"><a class="nav-link active"href="/glossary/">Glossary</a><li class="nav-item"><a class="nav-link"href="/about-the-author/">About the author</a><li class="nav-item"><a class="nav-link"href="/changelog/">Changelog</a><li class="nav-item"><a class="nav-link"href="/copyright/">Copyright</a></ul><div class="flex-grow-1 main container-fluid"><div class="row"><div class="col-lg-9 body p-3"><div class="d-lg-none mb-4"><div class="accordion"id="accordionExample"><div class="accordion-item"><h2 class="accordion-header"id="mobile-toc-header"><button class="accordion-button collapsed"type="button"data-bs-toggle="collapse"data-bs-target="#mobile-toc"aria-expanded="true"aria-controls="mobile-toc">In this chapter</button></h2><div id="mobile-toc"class="accordion-collapse collapse"aria-labelledby="mobile-toc-header"data-bs-parent="#accordionExample"><div class="accordion-body"><div class="toc-container"><a style="margin-left: 0em"href="#glossary">Glossary</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-__typename">__typename</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-alias">Alias</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-arguments">Arguments</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-cursor-based-pagination">Cursor-based pagination</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-data-source">Data source</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-directive">Directive</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-field">Field</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-inline-fragment">Inline fragment</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-input-type">Input type</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-interface">Interface</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-mutation">Mutation</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-offset-based-pagination">Offset-based pagination</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-orchestration-endpoint">Orchestration endpoint</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-overfetching">Overfetching</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-query">Query</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-resolver">Resolver</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-scalar">Scalar</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-schema">Schema</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-subscription">Subscription</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-trivial-resolver">Trivial resolver</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-type">Type</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-underfetching">Underfetching</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-union-type">Union type</a></div></div></div></div></div></div><h1 id="glossary">Glossary</h1><h4 class="break-after-avoid"id="defined-glossary-__typename">__typename</h4><p>A meta field that is implicitly present for every field. Its value is the name of the type. Most useful for <a href="/glossary/#defined-glossary-union-type">union types</a> and <a href="/glossary/#defined-glossary-interface">interfaces</a>.<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  user:<span class="hljs-literal"> User</span>
+}
+
+<span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  user {
+    username
+    __typename
+  }
+}</code></pre><p>And the response:<pre class="highlight"><code><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"getCurrentUser"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"username"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"admin1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"__typename"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"User"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre><p>See more in the <a href="/graphql-basics/queries-and-mutations/#defined-typename">__typename</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-alias">Alias</h4><p>When a client query wants to include the same field multiple types, for example with different arguments, it can differentiate by using different names for the fields. This is called an alias.<p>For example, this query includes the <code>tickets</code> with two different statuses:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  tickets(status:<span class="hljs-type"> STATUS</span>): [<span class="hljs-literal">Ticket</span>!]!
+}
+
+<span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span> {
+  user(id: <span class="hljs-string">"user1"</span>) {
+    open_tickets: tickets(status:<span class="hljs-type"> OPEN</span>) {
+      id
+    }
+    in_progress_tickets: tickets(
+      status:<span class="hljs-type"> IN_PROGRESS</span>,
+    ) {
+      id
+    }
+  }
+}</code></pre><p>See more in the <a href="/graphql-basics/queries-and-mutations/#defined-aliases">Aliases</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-arguments">Arguments</h4><p>An argument is a parameter for a field. The schema can define optional (no <code>!</code>) and required (<code>!</code> at the end) arguments. Arguments are typed values, and they can be <a href="/glossary/#defined-glossary-scalar">scalars</a> or <a href="/glossary/#defined-glossary-input-type">input types</a>.<p>This schema defines a field with a required, one with an opitional argument, and one that does not support any:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  <span class="hljs-comment"># No ! after String, so this is an optional argument</span>
+  allUsers(search:<span class="hljs-literal"> String</span>): [<span class="hljs-literal">User</span>]
+
+  <span class="hljs-comment"># The username is a required argument</span>
+  user(username:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> User</span>
+
+  <span class="hljs-comment"># no arguments</span>
+  issues: [<span class="hljs-literal">Issue</span>]
+}</code></pre><p>The client query can then define arguments for fields that support them:<pre class="highlight"><code><span class="hljs-keyword">query</span><span class="hljs-literal"> Query1</span> {
+  <span class="hljs-comment"># search for admins</span>
+  admins: allUsers(search: <span class="hljs-string">"admin"</span>) {
+    username
+  }
+
+  <span class="hljs-comment"># search for all users</span>
+  users: allUsers {
+    username
+  }
+
+  <span class="hljs-comment"># get a specific user</span>
+  user(username: <span class="hljs-string">"user1@example.com"</span>) {
+    email
+  }
+
+  <span class="hljs-comment"># get all issues</span>
+  issues {
+    due_date
+  }
+}</code></pre><p>See more in the <a href="/graphql-basics/schema/#defined-schema-arguments">Arguments</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-cursor-based-pagination">Cursor-based pagination</h4><p>A pagination style that allows retrieving the next page of item using a cursor value returned by the last query. This is how DynamoDB and some of the other NoSQL databases work.<p>When you send a query, the database returns a pagination token when there might be more items to fetch. In the case of DynamoDB, the result might contain a <code>LastEvaluatedKey</code> which the next query can pass as the <code>ExclusiveStartKey</code>. This fetches the next page.<p>The DynamoDB AppSync data source returns a <code>nextToken</code> instead which is a stringified and encrypted version of the token. But, as a convention, these tokens should be only used for fetching the next page.<p>Advantages of this pagination style are constant performance for all queries and that pages won't shift when items are added or removed.<p>A disadvantage is that it does not support locating an item in the whole result set. This makes it hard to accurately show things like <strong>items 31-40</strong> as later queries don't know if items are added or removed.<p>The alternative pagination style is called <a href="/glossary/#defined-glossary-offset-based-pagination">Offset-based pagination</a>.<p>See more in the <a href="/aws-appsync/data-sources/dynamodb/#defined-ddb-pagination">DynamoDB pagination</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-data-source">Data source</h4><p>Data sources interact with some external service, such as a database or a Lambda function. They provide an interface for AppSync to use resources in the AWS account and outside of it.<p>Each resolver is configured with a data source and the role of the request and the response mapping templates is to provide the input arguments and process the response of the data source.<p>See more in the <a href="/aws-appsync/data-sources/#defined-data-sources">Data sources</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-directive">Directive</h4><p>Extra metadata in the schema for types and fields, for example to define authorization rules.<p>For example, the <code>@aws_cognito_user_pools</code> directive restricts the <code>allUsers</code> query to be only available for administrators:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  <span class="hljs-comment"># only admins can query all users</span>
+  allUsers: [<span class="hljs-literal">User</span>]
+  <span class="hljs-meta">@aws_cognito_user_pools</span>(cognito_groups: [<span class="hljs-literal">"admin"</span>])
+}</code></pre><p>See more in the <a href="/graphql-basics/schema/#defined-directives">Directives</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-field">Field</h4><p>A field is a property in a type. Fields can be <a href="/glossary/#defined-glossary-scalar">scalars</a> or <a href="/glossary/#defined-glossary-type">complex types</a>. This type defines three fields, two calars and one complex type, defined elsewhere in the schema:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+  issues: [<span class="hljs-literal">Issue</span>!]!
+}</code></pre><h4 class="break-after-avoid"id="defined-glossary-inline-fragment">Inline fragment</h4><p>A way for a client query to differentiate result objects when a field can be return multiple types, which is the case for <a href="/glossary/#defined-glossary-interface">interfaces</a> and <a href="/glossary/#defined-glossary-union-type">union types</a>.<p>An inline fragment for an interface:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">interface</span><span class="hljs-literal"> User</span> {
+  <span class="hljs-comment"># ...</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> AdminUser</span> <span class="hljs-keyword">implements</span><span class="hljs-literal"> User</span> {
+  <span class="hljs-comment"># ...</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> NormalUser</span> <span class="hljs-keyword">implements</span><span class="hljs-literal"> User</span> {
+  <span class="hljs-comment"># ...</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  allUsers: [<span class="hljs-literal">User</span>!]!
+}</code></pre><pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  allUsers {
+    username
+    email
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> AdminUser</span> {
+      permissions
+    }
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> NormalUser</span> {
+      nickname
+    }
+  }
+}</code></pre><p>An inline fragment for a union type:<pre class="highlight"><code><span class="hljs-comment"># schema</span>
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  search(<span class="hljs-keyword">query</span>:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> User</span> |<span class="hljs-literal"> Issue</span>
+}</code></pre><pre class="highlight"><code><span class="hljs-comment"># query</span>
+<span class="hljs-keyword">query</span><span class="hljs-literal"> MyQuery</span> {
+  search(<span class="hljs-keyword">query</span>: <span class="hljs-string">"test"</span>) {
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> User</span> {
+      username
+     	email
+    }
+    ... <span class="hljs-keyword">on</span><span class="hljs-literal"> Issue</span> {
+      text
+    }
+  }
+}</code></pre><p>See more in the <a href="/graphql-basics/queries-and-mutations/#defined-inline-fragments">Inline fragments</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-input-type">Input type</h4><p>A type that can be used in arguments in the schema.<pre class="highlight"><code><span class="hljs-keyword">input</span><span class="hljs-literal"> UserInput</span> {
+  username:<span class="hljs-literal"> String</span>!
+  avatar:<span class="hljs-literal"> String</span>
+  cv:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  avatar:<span class="hljs-literal"> String</span>
+  cv:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Mutation</span> {
+  addUser(user:<span class="hljs-literal"> UserInput</span>):<span class="hljs-literal"> User</span>
+}</code></pre><p>Covered in the <a href="/graphql-basics/schema/#defined-input-types">Input types</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-interface">Interface</h4><p>An abstract type that allows other types to <em>implement</em> it. Fields can define this abstract type and queries can define what fields to retrieve using <a href="/glossary/#defined-glossary-inline-fragment">inline fragments</a>. Interfaces are a better alternative to <a href="/glossary/#defined-glossary-union-type">Union types</a> when there is a logical common ancestor for the returned types.<pre class="highlight"><code><span class="hljs-keyword">interface</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> AdminUser</span> <span class="hljs-keyword">implements</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+  permissions: [<span class="hljs-literal">String</span>!]!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> NormalUser</span> <span class="hljs-keyword">implements</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  <span class="hljs-comment"># this field returns a list of User objects</span>
+  allUsers: [<span class="hljs-literal">User</span>!]!
+}</code></pre><p>See more in the <a href="/graphql-basics/schema/#defined-interfaces">Interfaces</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-mutation">Mutation</h4><p>Mutations are the operations that change data. They can get input arguments that parameterize how they work, and they can return <a href="/glossary/#defined-glossary-scalar">scalars</a> and <a href="/glossary/#defined-glossary-type">complex types</a> as well. The implementation is defined by a <a href="/glossary/#defined-glossary-resolver">resolver</a>.<p>For example, this mutation creates a new user and returns the object:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> Mutation</span> {
+  createUser(username:<span class="hljs-literal"> String</span>!, email:<span class="hljs-literal"> String</span>):<span class="hljs-literal"> User</span>
+}</code></pre><p>See more in the <a href="/graphql-basics/queries-and-mutations/#defined-mutations">Mutations</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-offset-based-pagination">Offset-based pagination</h4><p>A pagination style where the items to fetch is defined by an offset that drops a number of items from the result. This is used by most SQL databases along with the LIMIT clause.<p>This provides a consistent view as each query knows which elements are in the result set making it easy to show a breadcrumb such as <strong>items 31-40</strong>.<p>The disadvantages are non-uniform performance (when the offset is large queries are slower) and fetching the next page might show duplicated results or skip some if items are added or removed between the calls.<p>The alternative pagination style is called <a href="/glossary/#defined-glossary-cursor-based-pagination">Cursor-based pagination</a>.<h4 class="break-after-avoid"id="defined-glossary-orchestration-endpoint">Orchestration endpoint</h4><p>An API endpoint that aggregates requests to other parts of the API. For example, there might be endpoints to fetch orders and products, but when a client needs details for the products in an order it needs to sent multiple requests. An orchestration endpoint that fetches the order and all the products in it saves the client from making additional roundtrips.<p>See more in the <a href="/graphql-basics/graphql-vs-rest/#defined-orchestration-endpoint">Orchestration endpoint</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-overfetching">Overfetching</h4><p>A problem with a query where the client gets more data than it needs. It is wasteful on the backend as it needs to fetch the additional data, and also wasteful on the network as it transfers bytes that are then discarded on the other side.<p>This usually happens when an endpoint returns a complex object and the client has no way of defining which fields it will use.<p>See more in the <a href="/graphql-basics/graphql-vs-rest/#defined-overfetching-underfetching">No overfetching or underfetching</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-query">Query</h4><p>An operation that retrieves data through a GraphQL API. This is a field of the <code>Query</code> type and it can receive arguments and return <a href="/glossary/#defined-glossary-scalar">scalars</a> and <a href="/glossary/#defined-glossary-type">complex types</a> as well.<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  user(username:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> User</span>
+}</code></pre><p>See more in the <a href="/graphql-basics/queries-and-mutations/#defined-queries-and-mutations">Queries and Mutations</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-resolver">Resolver</h4><p>A resolver provides a value for a field, in practice that is the implementation behind the GraphQL schema. See more in the <a href="/graphql-basics/resolvers/#defined-resolvers">Resolvers</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-scalar">Scalar</h4><p>A simple type that can be directly translated to a primitive value. Some scalars are guaranteed by the specification to be present, and the GraphQL server can also define additional ones. The predefined ones are:<ul><li><code>String</code><li><code>Int</code><li><code>Float</code><li><code>Boolean</code><li><code>ID</code></ul><p>For example, this type defines two scalar fields:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}</code></pre><p>See more in the <a href="/graphql-basics/schema/#defined-schema">Schema</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-schema">Schema</h4><p>The main GraphQL document that defines what <a href="/glossary/#defined-glossary-type">types</a>, <a href="/glossary/#defined-glossary-query">queries</a>, and <a href="/glossary/#defined-glossary-mutation">mutations</a> are possible in the API.<p>A schema that defines a type, a query, and a mutation:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  user(username:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> User</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Mutation</span> {
+  createUser(username:<span class="hljs-literal"> String</span>!, email:<span class="hljs-literal"> String</span>):<span class="hljs-literal"> User</span>
+}</code></pre><p>See more in the <a href="/graphql-basics/schema/#defined-schema">Schema</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-subscription">Subscription</h4><p>TODO<h4 class="break-after-avoid"id="defined-glossary-trivial-resolver">Trivial resolver</h4><p>A resolver that simply extracts the matching field from the source object. Useful when the parent resolver returns an object that matches the GraphQL type which is usually the case when the object comes from a database.<p>See more in the <a href="/graphql-basics/resolvers/#defined-nested-fields">Nested fields</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-type">Type</h4><p>A type is a complex object defined in the GraphQL schema.<p>For example, this is a <code>User</code> type with two fields:<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}</code></pre><p>See more in the <a href="/graphql-basics/schema/#defined-schema">Schema</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-underfetching">Underfetching</h4><p>A problem with a query where the client gets less data than it needs, so it needs to send follow-up requests. Since the number of roundtrips are the main contributor to the slowness of an application users experience, underfetching has a direct impact on UX.<p>This usually happens when a query can return a single object type and to provide all the data the client needs to send requests to other endpoints as well.<p>See more in the <a href="/graphql-basics/graphql-vs-rest/#defined-overfetching-underfetching">No overfetching or underfetching</a> chapter.<h4 class="break-after-avoid"id="defined-glossary-union-type">Union type</h4><p>A field that can be one of several types. Client can use <a href="/glossary/#defined-glossary-inline-fragment">inline fragments</a> to define how to handle each types.<pre class="highlight"><code><span class="hljs-keyword">type</span><span class="hljs-literal"> User</span> {
+  username:<span class="hljs-literal"> String</span>!
+  email:<span class="hljs-literal"> String</span>
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Issue</span> {
+  text:<span class="hljs-literal"> String</span>!
+}
+
+<span class="hljs-keyword">type</span><span class="hljs-literal"> Query</span> {
+  search(<span class="hljs-keyword">query</span>:<span class="hljs-literal"> String</span>!):<span class="hljs-literal"> User</span> |<span class="hljs-literal"> Issue</span>
+}</code></pre><p>See more in the <a href="/graphql-basics/schema/#defined-union-types">Union types</a> chapter.<div class="tcolorbox tcolorbox-secondary my-5"><div class="tbox-header fw-bold">Master AppSync and GraphQL</div><div class="tbox-body"><div>Support this book and get all future updates and extra chapters in ebook format.</div><div class="d-flex justify-content-center"><a role="button"href="https://tsallai.gumroad.com/l/graphql-on-aws-appsync-book"class="btn btn-primary not-styled mt-3 text-white">Buy the book</a></div></div></div><div class="pagination row"><div class="col-6"><span class="border rounded d-block p-3 text-muted"><div class="pagination-sublabel text-muted small">Previous</div><div class="pagination-title">&lt; Example application</div></span></div><div class="col-6"><a href="/about-the-author/"class="border rounded d-block p-3 text-end ms-auto"><div class="pagination-sublabel text-muted small">Next</div><div class="pagination-title">About the author &gt;</div></a></div></div><footer>© Tamás Sallai - <a href="https://advancedweb.hu">advancedweb.hu</a></footer></div><div class="col-lg-3 d-none d-lg-block"><div class="toc-container"><a style="margin-left: 0em"href="#glossary">Glossary</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-__typename">__typename</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-alias">Alias</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-arguments">Arguments</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-cursor-based-pagination">Cursor-based pagination</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-data-source">Data source</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-directive">Directive</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-field">Field</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-inline-fragment">Inline fragment</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-input-type">Input type</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-interface">Interface</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-mutation">Mutation</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-offset-based-pagination">Offset-based pagination</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-orchestration-endpoint">Orchestration endpoint</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-overfetching">Overfetching</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-query">Query</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-resolver">Resolver</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-scalar">Scalar</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-schema">Schema</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-subscription">Subscription</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-trivial-resolver">Trivial resolver</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-type">Type</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-underfetching">Underfetching</a> <a style="margin-left: 3em"href="/glossary/#defined-glossary-union-type">Union type</a></div></div></div></div></div><script src="/assets/main.077454cb0bffe3695e9176b1b5f8a7fd9676d920.js"></script>
